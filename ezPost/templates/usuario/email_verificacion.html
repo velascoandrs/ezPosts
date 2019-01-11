@@ -1,0 +1,5 @@
+{% autoescape off %}
+Hi {{ user.username }},
+Por favor haz click en el siguiente enlace para actualizar tu email
+    http://{{ domain }}/usuario/activarcorreo/{{ uid }}/{{ token }}
+{% endautoescape %}

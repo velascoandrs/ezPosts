@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block usuario %}
+{% endblock %}
+
+{% block content %}
+  <p>
+      Se te ha enviado un correo electronico, por favor confirma tu email para completar el registro. </p>
+  <a href="{% url 'usuarios:reenviar_mail' %}"><button>Volver a enviar el correo</button>  </a>
+{% endblock %}

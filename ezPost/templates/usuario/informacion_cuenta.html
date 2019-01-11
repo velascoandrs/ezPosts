@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+
+    {% block title %}
+    <title>Perfil</title>
+    {% endblock %}
+
+{% block content %}
+<h2> Informacion de la cuenta: {{ user.username}}</h2>
+    <div>
+    <table  class="table table-responsive-xl">
+        <tr >
+            <td>
+                    <img src="http://{{ request.get_host }}/media/{{ user.perfil.foto_perfil }}" class="rounded-circle" alt="Cinque Terre" height="256" width="256" >
+            </td>
+
+            <td>
+                <div class="row">
+                    <div class="col-sm-12">
+                <div class="list-group">
+                    <a class="list-group-item">Nombre: <strong>{{ user.first_name }}</strong></a>
+                    <a class="list-group-item">Apellido: <strong>{{ user.last_name }}</strong></a>
+                    <a class="list-group-item">Correo: <strong>{{ user.email }}</strong></a>
+                    <a class="list-group-item">Fecha Nacimiento: <strong>{{ user.perfil.fecha_nacimiento }}</strong></a>
+
+                </div>
+                </div>
+                </div>
+            </td>
+            <td>
+                <div class="row">
+                <div class="col-sm-12">
+
+                 <div class="list-group">
+                            <a class="list-group-item bg-danger" >Afinidades</a>
+                            {%  for afinidad in user.perfil.afinidades.all %}
+                                <a class="list-group-item">
+                                    <strong>{{ afinidad }}</strong>
+                                </a>
+                            {% endfor %}
+                 </div>
+                </div>
+                </div>
+            </td>
+
+
+        </tr>
+    </table>
+    </div>
+    <div>
+        <a href="{% url 'usuarios:actualizar' %}" type="button"><button>Actualizar Informacion</button></a>
+        <a href="{% url 'usuarios:cambiar_clave' %}" type="button"><button>Cambiar Contraseña</button></a>
+        <a href="{% url 'usuarios:cambiar_correo' %}" type="button"><button>Actualizar Email</button></a>
+    </div>
+{% endblock %}

@@ -1,0 +1,5 @@
+{% autoescape off %}
+Hi {{ user.username }},
+Por favor haz click en el siguiente enlace para confirmar tu registro en ezPost:
+    http://{{ domain }}/usuario/activar/{{ uid }}/{{ token }}
+{% endautoescape %}

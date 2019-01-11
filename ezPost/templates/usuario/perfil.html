@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+    {% block title %}
+    <title>Actualizar Perfil</title>
+    {% endblock %}
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+    <div class="form-group form-check">
+    {% csrf_token %}
+    {{ formulario_usuario.as_p }}
+    {{ formulario_perfil.as_p }}
+    <button type="submit">Guardar Cambios</button>
+    </div>
+    </form>
+{% endblock %}
