@@ -21,11 +21,10 @@ from django.conf.urls.static import static
 from django.views.decorators.cache import never_cache
 from django.views.generic.base import TemplateView
 from ckeditor_uploader import views as uploader_views
-from apps.posts.views import PostListView
 
 
 urlpatterns = [
-    path('', PostListView.as_view(), name='index'),
+    path('', TemplateView.as_view(template_name='index.html'), name='index'),
     path('admin/', admin.site.urls),
     path('usuario/', include(('apps.usuarios.urls','usuarios'), namespace="usuarios")),
     path('post/', include(('apps.posts.urls','posts'), namespace="posts")),

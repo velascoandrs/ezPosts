@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block inicio %}<a class="navbar-brand" href="/">ezPosts</a> {% endblock %}
+ {% block busquedaForm %}
+ {% endblock %}
+{% block content %}
+     <link href="/static/css/post.detail.css"  rel="stylesheet"/>
+    <div class="col-sm-16" id="contenido" >
+
+        <div class="container">
+
+                <h2 >{{ post.titulo }}</h2>
+                <h6> {{ post.autor.username }}</h6>
+                <h6> {{ post.fecha_creacion }}</h6>
+                {{ post.contenido | safe }}
+
+        </div>
+    </div>
+
+{% endblock %}

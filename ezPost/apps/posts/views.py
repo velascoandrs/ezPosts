@@ -1,11 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.views.generic.base import View
 from rest_framework import generics
 from apps.posts.forms import *
 from apps.posts.helpers import handle_uploaded_file
 from apps.usuarios.models import Afinidad
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from apps.posts.serializers import PostDetalleSerializado
 
 
@@ -14,18 +15,10 @@ def index_post(request):
 
 
 # Mostrar 10 ultimos posts clase prototipo
-class PostListView(ListView):
+class PostView(DetailView):
     model = Post
-    template_name = 'index.html'
-    context_object_name = "posts"
-    paginate_by = 10  # and that's it !!
-
-    def head(self, *args, **kwargs):
-        ultimo_post = self.get_queryset().latest('publication_date')
-        response = HttpResponse('')
-        # RFC 1123 date format
-        response['Last-Modified'] = ultimo_post.publication_date.strftime('%a, %d %b %Y %H:%M:%S GMT')
-        return response
+    template_name = 'post/post_info.html'
+    context_object_name = "post"
 
 
 class PostDetalleListApi(generics.ListAPIView):
