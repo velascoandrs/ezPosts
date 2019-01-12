@@ -20,8 +20,8 @@
         let $contenido = $("#contenido");
         if (inicio){
              valor=null;
-             setPagina(1);
              $contenido.empty();
+             setPagina(0); //Antes era 1
              setUrl(1)
         }else {
             setUrl(pagina);
@@ -34,10 +34,10 @@
                         data.results.forEach(
                             (post)=>{
                                 let portada_img="https://bitcoinist.com/wp-content/uploads/2018/10/shutterstock_597074750.jpg";
-                                if(post.portada){
-                                    portada_img=post.portada
+                                if(post.portada==null){
+                                    post.portada=portada_img
                                 }
-                                html = html +generarVista(portada_img, post.titulo, post.autor);
+                                html = html +generarVista(post);
                             }
                         );
                         $contenido.append(html);
@@ -59,24 +59,25 @@
     );
     function buscarPost() {
                 valor = document.getElementById('buscar').value;
+                setPagina(1);
                 $("#contenido").empty();
                 cargarPosts(1)
     }
 
-    function generarVista(portada,titulo,autor){
+    function generarVista(post){
 	    let html =`<div class="blog-card">
                         <div class="meta">
-                         <div class="photo" style="background-image: url(${portada})">
+                         <div class="photo" style="background-image: url(${post.portada})">
                           </div>
                            <ul class="details">
-                             <li><a href="#">${autor}</a></li>
-                             <li >Aug. 24, 2015</li>
+                             <li><a href="/usuario/perfil/${post.autor.pk}">${post.autor.username}</a></li>
+                             <li >${post.fecha_creacion}</li>
                             </ul>
                          </div>
                     <div class="description">
-                    <h1>${titulo}</h1>
+                    <h1>${post.titulo}</h1>
                     <p class="read-more">
-                    <a href="#">Leer mas..</a>
+                    <a href="/post/ver/${post.pk}">Leer mas..</a>
                     </p>
                     </div>
                     </div>`;

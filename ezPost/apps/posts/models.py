@@ -11,3 +11,4 @@ class Post(models.Model):
     autor = models.ForeignKey(User, blank=False, on_delete=models.CASCADE, null=False)
     afinidad = models.ForeignKey(Afinidad, null=False, blank=False, on_delete=models.CASCADE)
     contenido = RichTextUploadingField(null=False, blank=False)
+    fecha_creacion = models.DateField(null=False,blank=False, auto_now=True)
