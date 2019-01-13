@@ -76,6 +76,7 @@
                          </div>
                     <div class="description">
                     <h1>${post.titulo}</h1>
+                    <p><strong>Categoría: </strong>${post.afinidad}</p>
                     <p class="read-more">
                     <a href="/post/ver/${post.pk}">Leer mas..</a>
                     </p>

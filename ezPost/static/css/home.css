@@ -1,0 +1,54 @@
+* {
+  box-sizing: border-box;
+}
+
+
+.menu {
+  float:left;
+  width:20%;
+}
+
+.menu a {
+  padding:8px;
+  margin-top:7px;
+  display:block;
+  width:100%;
+  color:black;
+
+}
+
+.left{
+  float: left;
+  width: 20%
+}
+
+.main {
+  float:left;
+  width:60%;
+  padding:0 20px;
+}
+.right {
+  float:left;
+  width:20%;
+  padding:15px;
+  margin-top:7px;
+  text-align:center;
+}
+
+  .titulo{
+    border-bottom: 6px solid #ff133d;
+  }
+
+  .borde {
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+}
+
+@media only screen and (max-width:620px) {
+  /* For mobile phones: */
+  .menu, .main, .right {
+    width:100%;
+  }
+
+
+}

@@ -166,19 +166,33 @@ AUTH_USER_MODEL = "usuarios.User"
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 
+
+"""
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 1000,
+        'width': 800,
+
+    },
+}
+"""
+
+
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'Custom',
         'height': 500,
         'toolbar_Custom': [
-            ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo'],
-            ['Link', 'Unlink', 'Anchor'],
+            ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo','Preview'],
+            ['Link', 'Unlink', 'Anchor', 'NumberedList', 'BulletedList','Find', 'Replace',],
             ['Image', 'Flash', 'Table', 'HorizontalRule', 'Youtube'],
-            ['TextColor', 'BGColor'],
+            ['TextColor', 'BGColor', 'FontSize'],
             ['Smiley', 'SpecialChar'], ['Source']
         ],
     },
 }
+
 
 CKEDITOR_IMAGE_BACKEND = 'pillow'  # manage.py generateckeditorthumbnails
 

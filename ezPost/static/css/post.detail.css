@@ -6,6 +6,13 @@ body {
   background: whitesmoke;
   margin: 2rem;
 }
+
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 .blog-card {
   display: flex;
   flex-direction: column;
@@ -31,7 +38,7 @@ body {
 .blog-card .meta {
   position: relative;
   z-index: 0;
-  height: 800px;
+  height: 300px;
 }
 .blog-card .photo {
   position: absolute;
@@ -149,7 +156,7 @@ body {
 @media (min-width: 640px) {
   .blog-card {
     flex-direction: row;
-    max-width: 700px;
+    max-width: 600px;
   }
   .blog-card .meta {
     flex-basis: 40%;
@@ -180,4 +187,6 @@ body {
   .blog-card.alt .details {
     padding-left: 25px;
   }
+
+
 }

@@ -11,6 +11,7 @@
     {% endblock %}
     <meta charset="UTF-8">
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/home.css" rel="stylesheet">
     <script src="/static/js/bootstrap.bundle.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
 
@@ -51,7 +52,7 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            <image src="http://{{ request.get_host }}/media/{{ user.perfil.foto_perfil }}" class="rounded-circle" alt="Cinque Terre" height="32" width="32" ></image>
+            <img src="http://{{ request.get_host }}/media/{{ user.perfil.foto_perfil }}" class="rounded-circle" alt="Cinque Terre" height="32" width="32" />
             <strong>{{ user.username }}</strong>
         </a>
 
@@ -83,8 +84,34 @@
     {% block mensajes %}
     {% endblock %}
     <div style="padding-top: 100px;">
-    {% block content %}
-    {% endblock %}
+        <div style="overflow:auto">
+            {% block tendencias %}
+                <div class="menu">
+                    <h2>Trends</h2>
+                    <div id='tendendias'>
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                        <a href="#">Link 4</a>
+                    </div>
+            {% endblock %}
+        </div>
+        <div class="main borde">
+            <h2 class="titulo">{% block titulo %}{% endblock %}</h2>
+            {% block content %}
+
+            {% endblock %}
+        </div>
+        {% block acerca %}
+        <div class="right">
+             <h2>Acerca del autor:</h2>
+             {% block contenidoAutor %}{% endblock %}
+        </div>
+        {% endblock %}
+    </div>
+        {% block bot  %}
+            <div style="background-color:#e5e5e5;padding:10px;margin-top:7px;"></div>
+        {% endblock %}
     </div>
     {% block js %}
     {% endblock %}
