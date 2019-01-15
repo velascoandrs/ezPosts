@@ -1,18 +1,21 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
     {% block title %}
     <title>Ingreso</title>
     {% endblock %}
 
+{% block meta-content %}
+    <div class="main-profile borde" style="display: flex;flex-direction: column;justify-content: center;">
+    <h2 class="titulo">{% block titulo %}Ingresar{% endblock %}</h2>
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-12">
-        <h2 >Login</h2>
             <form method="post">
 
                 {% csrf_token %}
-                 {{ form.as_p }}
+                 {{ form |crispy }}
                     <button class="btn btn-dark" type="submit">Login</button>
             </form>
                 <a href="{% url 'password_reset'%}">He olvidado mi contraseña</a>
@@ -22,12 +25,11 @@
 
 
 
-
-    <div>
-        <strong>--------------------------------------------------------------</strong>
-    </div>
-    <div>
-        <a href="{% url 'social:begin' 'twitter' %}"><button  class="btn btn-info">Ingresar con Twitter</button></a>
+    <h3 class="titulo-top"></h3>
+    <div class="main-profile">
+           <a href="{% url 'social:begin' 'twitter' %}"><button  class="btn btn-info ">Ingresar con Twitter</button></a>
     </div>
 
+    {% endblock %}
+    </div>
 {% endblock %}

@@ -1,20 +1,15 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block meta-content %}
+    <div class="main-profile borde" style="display: flex;flex-direction: column;justify-content: center;">
+    <h2 class="titulo">{% block titulo %}Registrarse{% endblock %}</h2>
 {% block content %}
-  <h2>Sign up</h2>
   <form method="post">
     {% csrf_token %}
-    {% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-          <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
-      </p>
-    {% endfor %}
+    {{ form |crispy  }}
     <button type="submit">Sign up</button>
   </form>
+{% endblock %}
+    </div>>
 {% endblock %}

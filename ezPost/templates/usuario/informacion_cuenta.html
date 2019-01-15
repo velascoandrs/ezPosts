@@ -4,9 +4,10 @@
     {% block title %}
     <title>Perfil</title>
     {% endblock %}
-
+{% block meta-content %}
+        <div class="main-profile borde" style="display: flex;flex-direction: column;justify-content: center;">
+            <h2 class="titulo">{% block titulo %}Informacion de la cuenta: {{ user.username}}{% endblock %}</h2>
 {% block content %}
-<h2> Informacion de la cuenta: {{ user.username}}</h2>
     <div>
     <table  class="table table-responsive-xl">
         <tr >
@@ -48,8 +49,11 @@
     </table>
     </div>
     <div>
-        <a href="{% url 'usuarios:actualizar' %}" type="button"><button>Actualizar Informacion</button></a>
-        <a href="{% url 'usuarios:cambiar_clave' %}" type="button"><button>Cambiar Contraseña</button></a>
-        <a href="{% url 'usuarios:cambiar_correo' %}" type="button"><button>Actualizar Email</button></a>
+        <a href="{% url 'usuarios:actualizar' %}" type="button"><button class="btn btn-outline-danger">Actualizar Informacion</button></a>
+        <a href="{% url 'usuarios:cambiar_clave' %}" type="button"><button class="btn btn-outline-danger">Cambiar Contraseña</button></a>
+        <a href="{% url 'usuarios:cambiar_correo' %}" type="button"><button class="btn btn-outline-danger">Actualizar Email</button></a>
     </div>
+{% endblock %}
+
+        </div>
 {% endblock %}

@@ -1,12 +1,17 @@
 {% extends 'base.html' %}
-
+{% load crispy_forms_tags %}
     {% block title %}
-    <title>Actualizar Correo electronico</title>
+    <title>Actualizar Correo electrónico</title>
     {% endblock %}
-{% block content %}
-    <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Aceptar</button>
-    </form>
+{% block meta-content %}
+    <div class="main-profile borde" style="display: flex;flex-direction: column;justify-content: center;">
+    <h2 class="titulo">{% block titulo %}Actualizar Correo electrónico{% endblock %}</h2>
+    {% block content %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form | crispy }}
+            <button type="submit" class="btn btn-danger">Aceptar</button>
+        </form>
+    {% endblock %}
+    </div>
 {% endblock %}

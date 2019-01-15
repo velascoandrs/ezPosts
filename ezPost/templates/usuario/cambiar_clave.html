@@ -1,19 +1,24 @@
 {% extends 'base.html' %}
-
-    {% block title %}
+{% load crispy_forms_tags %}
+{% block title %}
     <title>Actualizar Contraseña</title>
+{% endblock %}
+{% block meta-content %}
+    <div class="main-profile borde" style="display: flex;flex-direction: column;justify-content: center;">
+    <h2 class="titulo">{% block titulo %}Actualizar Contraseña{% endblock %}</h2>
+    {% block content %}
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form | crispy  }}
+            <button type="submit" class="btn btn-danger">Guardar Cambios</button>
+        </form>
     {% endblock %}
-{% block content %}
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li class="{{ message.tags }}">{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Guardar Cambios</button>
-    </form>
+    </div>
 {% endblock %}

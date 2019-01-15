@@ -39,11 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.usuarios',
     'apps.posts',
+    'crispy_forms_foundation',
     # Para autentificarse usando redes sociales
     'social_django',  # <--
     'ckeditor',
     'ckeditor_uploader',
     'rest_framework',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -185,16 +187,17 @@ CKEDITOR_CONFIGS = {
         'height': 500,
         'toolbar_Custom': [
             ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo','Preview'],
-            ['Link', 'Unlink', 'Anchor', 'NumberedList', 'BulletedList', 'Find', 'Replace','CodeSnippet'],
-            ['Image', 'Imageresponsive','Flash', 'Table', 'HorizontalRule', 'Youtube'],
+            ['Anchor', 'NumberedList', 'BulletedList', 'Find', 'Replace','CodeSnippet'],
+            ['Image', 'ImageResponsive','Flash', 'Table', 'HorizontalRule', 'Youtube'],
             ['TextColor', 'BGColor', 'FontSize'],
             ['Smiley', 'SpecialChar'], ['Source']
         ],
         'extraPlugins': ','.join(
             [
                 'codesnippet','imageresponsive','youtube'
-            ])
+            ]),
     },
+
 }
 
 
@@ -208,3 +211,7 @@ REST_FRAMEWORK = {
 SERIALIZATION_MODULES = {
     'json': 'wadofstuff.django.serializers.json'
 }
+
+from crispy_forms_foundation.settings import *
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CKEDITOR_ALLOW_NONIMAGE_FILES = False

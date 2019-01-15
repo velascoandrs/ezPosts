@@ -36,7 +36,7 @@
     </style>
     <link href="/static/css/post.detail.css"  rel="stylesheet"/>
 {% endblock %}
-{% block inicio %}<a class="navbar-brand" href="#" onclick="return cargarPosts(1,true)">ezPosts</a> {% endblock %}
+{% block inicio %}<a class="navbar-brand" href="#" onclick="cargarPosts(1,true)">ezPosts</a> {% endblock %}
  {% block busquedaForm %}
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" id ="buscar" type="search" placeholder="Busqueda" aria-label="Search">
@@ -45,6 +45,16 @@
 
   {% endblock %}
 {% block titulo %}Posts más recientes{% endblock %}
+
+            {% block tendencias %}
+                    <h2>Trends</h2>
+                    <div id='tendendias'>
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                        <a href="#">Link 4</a>
+                    </div>
+            {% endblock %}
 {% block content %}
 
     <div class="col-sm-12" id="contenido" >

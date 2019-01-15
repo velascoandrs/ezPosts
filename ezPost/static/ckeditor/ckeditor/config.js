@@ -10,5 +10,6 @@ CKEDITOR.editorConfig = function( config ) {
     config.extraPlugins = ['youtube','imageresponsive','codesnippet'];
     config.youtube_width = '640';
     config.youtube_height = '480';
-    config.codeSnippet_theme = 'monokai';
+    config.codeSnippet_theme = 'tomorrow-night-bright';
+
 };
