@@ -2,8 +2,12 @@
 
 {% block usuario %}
 {% endblock %}
-
-{% block content %}
-  <p>
-      Se te ha enviado un correo electronico al nuevo email, confirma el correo para completar con la actualizacion. </p>
+{% block meta-content %}
+    <div class="main-profile borde" style="display: flex;flex-direction: column;justify-content: center;">
+    <h2 class="titulo">{% block titulo %}Confirma tu correo electrónico{% endblock %}</h2>
+    {% block content %}
+        <p>
+            Se te ha enviado un correo electronico al nuevo email, confirma el correo para completar con la actualizacion. </p>
+    {% endblock %}
+    </div>
 {% endblock %}

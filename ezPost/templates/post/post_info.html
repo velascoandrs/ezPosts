@@ -2,18 +2,44 @@
 {% block inicio %}<a class="navbar-brand" href="/">ezPosts</a> {% endblock %}
  {% block busquedaForm %}
  {% endblock %}
+
+
+
+{% block tendencias %}
+         <h2>Trends</h2>
+                    <div id='tendendias'>
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                        <a href="#">Link 4</a>
+                    </div>
+{% endblock %}
+
+{% block meta-content %}
+<div class="main-info borde" style="display: flex;flex-direction: column;justify-content: center;">
+<h2 class="titulo">{% block titulo %}{{ post.titulo }}{% endblock %}</h2>
 {% block content %}
+    <script>hljs.initHighlightingOnLoad();</script>
      <link href="/static/css/post.detail.css"  rel="stylesheet"/>
     <div class="col-sm-16" id="contenido" >
 
         <div class="container">
 
-                <h2 >{{ post.titulo }}</h2>
                 <h6> {{ post.autor.username }}</h6>
                 <h6> {{ post.fecha_creacion }}</h6>
+
                 {{ post.contenido | safe }}
 
         </div>
     </div>
 
 {% endblock %}
+</div>
+{% endblock %}
+{% block titulo_acerca %}Acerca del autor:{% endblock %}
+ {% block contenidoAutor %}
+        <img src="http://{{ request.get_host }}/media/{{ post.autor.perfil.foto_perfil }}"
+             class="rounded-circle" alt="Cinque Terre" height="128" width="128"/>
+        <a href=""><h4>{{ post.autor.username }}</h4></a>
+        <a><h4>Posts publicados:{{ post.autor.post_set.count }}</h4></a>
+ {% endblock %}

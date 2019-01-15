@@ -11,13 +11,15 @@
     {% endblock %}
     <meta charset="UTF-8">
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/home.css" rel="stylesheet">
     <script src="/static/js/bootstrap.bundle.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-
+    <link href="/static/ckeditor/ckeditor/plugins/codesnippet/lib/highlight/styles/tomorrow-night-bright.css" rel="stylesheet">
+    <script src="/static/ckeditor/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
     {% block extraEstilos %}
     {% endblock %}
     <style>
@@ -51,7 +53,7 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            <image src="http://{{ request.get_host }}/media/{{ user.perfil.foto_perfil }}" class="rounded-circle" alt="Cinque Terre" height="32" width="32" ></image>
+            <img src="http://{{ request.get_host }}/media/{{ user.perfil.foto_perfil }}" class="rounded-circle" alt="Cinque Terre" height="32" width="32" />
             <strong>{{ user.username }}</strong>
         </a>
 
@@ -83,9 +85,33 @@
     {% block mensajes %}
     {% endblock %}
     <div style="padding-top: 100px;">
-    {% block content %}
-    {% endblock %}
+        <div style="overflow:auto;" >
+            <div class="menu">
+            {% block tendencias %}
+
+            {% endblock %}
+            </div>
+        {% block meta-content %}
+        <div class="main" style="display: flex;flex-direction: column;justify-content: center;">
+            <h2 class="titulo">{% block titulo %}{% endblock %}</h2>
+            {% block content %}
+
+            {% endblock %}
+        </div>
+        {% endblock %}
+        {% block acerca %}
+        <div class="right">
+             <h2>{% block titulo_acerca %}{% endblock %}</h2>
+             {% block contenidoAutor %}{% endblock %}
+        </div>
+        {% endblock %}
     </div>
+
+    </div>
+        {% block bot  %}
+            <div style="background-color:#e5e5e5;padding:10px;margin-top:7px;"></div>
+        {% endblock %}
+
     {% block js %}
     {% endblock %}
     {% block busquedaPost %}

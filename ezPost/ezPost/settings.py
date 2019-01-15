@@ -39,11 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.usuarios',
     'apps.posts',
+    'crispy_forms_foundation',
     # Para autentificarse usando redes sociales
     'social_django',  # <--
     'ckeditor',
     'ckeditor_uploader',
     'rest_framework',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -166,19 +168,38 @@ AUTH_USER_MODEL = "usuarios.User"
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 
+
+"""
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 1000,
+        'width': 800,
+
+    },
+}
+"""
+
+
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'Custom',
         'height': 500,
         'toolbar_Custom': [
-            ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo'],
-            ['Link', 'Unlink', 'Anchor'],
-            ['Image', 'Flash', 'Table', 'HorizontalRule', 'Youtube'],
-            ['TextColor', 'BGColor'],
+            ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo','Preview'],
+            ['Anchor', 'NumberedList', 'BulletedList', 'Find', 'Replace','CodeSnippet'],
+            ['Image', 'ImageResponsive','Flash', 'Table', 'HorizontalRule', 'Youtube'],
+            ['TextColor', 'BGColor', 'FontSize'],
             ['Smiley', 'SpecialChar'], ['Source']
         ],
+        'extraPlugins': ','.join(
+            [
+                'codesnippet','imageresponsive','youtube'
+            ]),
     },
+
 }
+
 
 CKEDITOR_IMAGE_BACKEND = 'pillow'  # manage.py generateckeditorthumbnails
 
@@ -190,3 +211,7 @@ REST_FRAMEWORK = {
 SERIALIZATION_MODULES = {
     'json': 'wadofstuff.django.serializers.json'
 }
+
+from crispy_forms_foundation.settings import *
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CKEDITOR_ALLOW_NONIMAGE_FILES = False

@@ -16,13 +16,16 @@
         }
 
     }
+    function limpiar() {
+        valor=null;
+        setPagina(0); //Antes era 1
+        setUrl(1)
+        $("#contenido").empty();
+    }
     function cargarPosts(pagina,inicio=false){
         let $contenido = $("#contenido");
         if (inicio){
-             valor=null;
-             $contenido.empty();
-             setPagina(0); //Antes era 1
-             setUrl(1)
+            limpiar();
         }else {
             setUrl(pagina);
         }
@@ -37,7 +40,7 @@
                                 if(post.portada==null){
                                     post.portada=portada_img
                                 }
-                                html = html +generarVista(post);
+                                html = html +PostRender(post);
                             }
                         );
                         $contenido.append(html);
@@ -48,7 +51,7 @@
                 }
         );
     }
-    $(window).scroll(function(){
+    $(window).scroll(()=>{
                             var scroll_position_for_post_load = $(window).height() + $(window).scrollTop() + 100;
                             if (scroll_position_for_post_load >= $(document).height()){
                                 pagina++;
@@ -64,8 +67,16 @@
                 cargarPosts(1)
     }
 
-    function generarVista(post){
+    function PostRender(post){
 	    let html =`<div class="blog-card">
+                    <div class="description">
+                        <h1>${post.titulo}</h1>
+                        <p><strong>Categoría: </strong>${post.afinidad}</p>
+                        <p><strong>Visualizaciones: </strong>${post.visualizaciones}</p>
+                            <p class="read-more">
+                                <a href="/post/ver/${post.pk}">Leer mas..</a>
+                             </p>
+                    </div>
                         <div class="meta">
                          <div class="photo" style="background-image: url(${post.portada})">
                           </div>
@@ -74,12 +85,7 @@
                              <li >${post.fecha_creacion}</li>
                             </ul>
                          </div>
-                    <div class="description">
-                    <h1>${post.titulo}</h1>
-                    <p class="read-more">
-                    <a href="/post/ver/${post.pk}">Leer mas..</a>
-                    </p>
-                    </div>
+                    
                     </div>`;
     return html
 }

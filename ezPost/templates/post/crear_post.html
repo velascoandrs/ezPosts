@@ -1,16 +1,21 @@
 {% extends 'base.html' %}
-{% block content %}
- <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h1>Crear Post</h1>
-                <form method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ form }}
-                    {{ form.media }}
-                    <button type="submit">Crear post</button>
-                </form>
+{% load crispy_forms_tags %}
+{% block meta-content %}
+<div class="main-profile borde" style="display: flex;flex-direction: column;justify-content: center;">
+<h2 class="titulo">{% block titulo %}Crear Post{% endblock %}</h2>
+    {% block content %}
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form | crispy }}
+                        {{ form.media    }}
+                        <button type="submit" class="btn btn-dark">Crear post</button>
+                    </form>
             </div>
         </div>
+</div>
+    {% endblock %}
 </div>
 {% endblock %}

@@ -5,6 +5,7 @@ from django.views.generic.base import View
 from rest_framework import generics
 from apps.posts.forms import *
 from apps.posts.helpers import handle_uploaded_file
+from apps.posts.models import Visualizacion
 from apps.usuarios.models import Afinidad
 from django.views.generic import ListView, DetailView
 from apps.posts.serializers import PostDetalleSerializado
@@ -19,6 +20,13 @@ class PostView(DetailView):
     model = Post
     template_name = 'post/post_info.html'
     context_object_name = "post"
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if request.user.is_authenticated and self.object.autor.pk != request.user.id:
+            Visualizacion.objects.create(post=self.object)
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
 
 
 class PostDetalleListApi(generics.ListAPIView):

@@ -6,6 +6,14 @@ body {
   background: whitesmoke;
   margin: 2rem;
 }
+
+
+p > img {
+  max-width: 100%;
+  height: auto;
+}
+
+
 .blog-card {
   display: flex;
   flex-direction: column;
@@ -23,7 +31,7 @@ body {
   color: inherit;
 }
 .blog-card a:hover {
-  color: #5ad67d;
+  color: #ff133d;
 }
 .blog-card:hover .photo {
   transform: scale(1.3) rotate(3deg);
@@ -31,7 +39,7 @@ body {
 .blog-card .meta {
   position: relative;
   z-index: 0;
-  height: 800px;
+  height: 300px;
 }
 .blog-card .photo {
   position: absolute;
@@ -90,7 +98,7 @@ body {
 }
 .blog-card .description {
   padding: 1rem;
-  background: #fff;
+  background: white;
   position: relative;
   z-index: 1;
 }
@@ -106,14 +114,14 @@ body {
   font-size: 1rem;
   font-weight: 300;
   text-transform: uppercase;
-  color: #a2a2a2;
+  color: white;
   margin-top: 5px;
 }
 .blog-card .description .read-more {
   text-align: right;
 }
 .blog-card .description .read-more a {
-  color: #5ad67d;
+  color: rgba(14, 7, 75, 0.93);
   display: inline-block;
   position: relative;
 }
@@ -138,8 +146,8 @@ body {
   content: "";
   position: absolute;
   height: 5px;
-  background: #5ad67d;
-  width: 35px;
+  background: #ff133d;
+  width: 80%;
   top: -0.75rem;
   border-radius: 3px;
 }
@@ -149,7 +157,7 @@ body {
 @media (min-width: 640px) {
   .blog-card {
     flex-direction: row;
-    max-width: 700px;
+    max-width: 600px;
   }
   .blog-card .meta {
     flex-basis: 40%;
@@ -157,11 +165,13 @@ body {
   }
   .blog-card .description {
     flex-basis: 60%;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
   }
   .blog-card .description:before {
     transform: skewX(-3deg);
     content: "";
-    background: #fff;
+    background: white;
     width: 30px;
     position: absolute;
     left: -10px;
@@ -180,4 +190,6 @@ body {
   .blog-card.alt .details {
     padding-left: 25px;
   }
+
+
 }

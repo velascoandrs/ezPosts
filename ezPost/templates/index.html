@@ -36,7 +36,7 @@
     </style>
     <link href="/static/css/post.detail.css"  rel="stylesheet"/>
 {% endblock %}
-{% block inicio %}<a class="navbar-brand" href="#" onclick="return cargarPosts(1,true)">ezPosts</a> {% endblock %}
+{% block inicio %}<a class="navbar-brand" href="#" onclick="cargarPosts(1,true)">ezPosts</a> {% endblock %}
  {% block busquedaForm %}
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" id ="buscar" type="search" placeholder="Busqueda" aria-label="Search">
@@ -44,15 +44,30 @@
        <button class="btn btn-danger my-2 my-sm-0" onclick="buscarPost()">Buscar Post</button>
 
   {% endblock %}
+{% block titulo %}Posts más recientes{% endblock %}
+
+            {% block tendencias %}
+                    <h2>Trends</h2>
+                    <div id='tendendias'>
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                        <a href="#">Link 4</a>
+                    </div>
+            {% endblock %}
 {% block content %}
 
-    <h1 id="titulo" align="center">Posts Mas recientes</h1>
     <div class="col-sm-12" id="contenido" >
     </div>
     <div class="row">
         <div id="loader"></div>
     </div>
+    {% block acerca %}{% endblock %}
+
 {% endblock %}
+
+{% block bot %}{% endblock %}
+
 {% block js %}
     <script
         src="https://code.jquery.com/jquery-3.3.1.min.js"
