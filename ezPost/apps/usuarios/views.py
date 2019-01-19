@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import check_password
 from django.db import transaction
 from django.contrib.auth import login, update_session_auth_hash
 from django.http import HttpResponse

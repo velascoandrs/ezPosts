@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-<h2 class="titulo">{% block titulo %}Crear Post{% endblock %}</h2>
+<h2 class="titulo">{% block titulo %}Actualizar contenido del Post{% endblock %}</h2>
     {% block content %}
                <link href="/static/css/post.detail.css"  rel="stylesheet"/>
                 <div class="col-12 marco border">
@@ -11,7 +11,7 @@
                         <div class="row">
                             <div class="col-4"></div>
                                  <div class="col-4">
-                                    <button type="submit" class="btn btn-outline-dark">Crear post</button>
+                                    <button type="submit" class="btn btn-dark">Guardar Cambios</button>
                                  </div>
                             <div class="col-4"></div>
                         </div>
@@ -19,3 +19,5 @@
                     </form>
             </div>
     {% endblock %}
+{% block bot %}
+{% endblock %}

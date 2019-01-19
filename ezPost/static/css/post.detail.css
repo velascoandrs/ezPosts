@@ -2,10 +2,7 @@
 * {
   box-sizing: border-box;
 }
-body {
-  background: whitesmoke;
-  margin: 2rem;
-}
+
 
 
 p > img {
@@ -154,6 +151,7 @@ p > img {
 .blog-card:hover .details {
   left: 0%;
 }
+
 @media (min-width: 640px) {
   .blog-card {
     flex-direction: row;
@@ -192,4 +190,8 @@ p > img {
   }
 
 
+}
+
+.marco{
+  background-color: white;
 }

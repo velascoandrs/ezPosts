@@ -19,6 +19,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     <link href="/static/ckeditor/ckeditor/plugins/codesnippet/lib/highlight/styles/tomorrow-night-bright.css" rel="stylesheet">
+    <link href="/static/css/animate.css" rel="stylesheet">
     <script src="/static/ckeditor/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
     {% block extraEstilos %}
     {% endblock %}
@@ -26,6 +27,7 @@
         body{
             background: whitesmoke;
         }
+
     </style>
 </head>
 
@@ -84,30 +86,31 @@
 
     {% block mensajes %}
     {% endblock %}
-    <div style="padding-top: 100px;">
-        <div style="overflow:auto;" >
-            <div class="menu">
-            {% block tendencias %}
+   <div class="col-md-12" style="padding-top: 100px;">
+   {% block metacontent %}
+		<div class="row">
+			<div class="col-sm-3" style="margin-right: 20px">
+				{% block lateral %}
 
-            {% endblock %}
-            </div>
-        {% block meta-content %}
-        <div class="main" style="display: flex;flex-direction: column;justify-content: center;">
-            <h2 class="titulo">{% block titulo %}{% endblock %}</h2>
-            {% block content %}
+				{% endblock %}
+			</div>
 
-            {% endblock %}
-        </div>
-        {% endblock %}
-        {% block acerca %}
-        <div class="right">
-             <h2>{% block titulo_acerca %}{% endblock %}</h2>
-             {% block contenidoAutor %}{% endblock %}
-        </div>
-        {% endblock %}
-    </div>
+			<div class="col-sm-7">
+            <div class="row">
+            <div id="title"><h2 class="titulo">{% block titulo %}{% endblock %}</h2></div>
+					{% block content %}
+					<div class="col-sm-1"></div>
+					<div class="col-sm-10" id="contenido">
 
-    </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                {% endblock %}
+				</div>
+			</div>
+			<div class="col-md-1"></div>
+		</div>
+       {% endblock %}
+		</div>
         {% block bot  %}
             <div style="background-color:#e5e5e5;padding:10px;margin-top:7px;"></div>
         {% endblock %}

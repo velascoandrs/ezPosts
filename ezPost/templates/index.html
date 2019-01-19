@@ -41,23 +41,22 @@
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" id ="buscar" type="search" placeholder="Busqueda" aria-label="Search">
         </form>
-       <button class="btn btn-danger my-2 my-sm-0" onclick="buscarPost()">Buscar Post</button>
+       <button class="btn btn-danger my-2 my-sm-0" onclick="return buscarPost()">Buscar Post</button>
 
   {% endblock %}
 {% block titulo %}Posts más recientes{% endblock %}
 
-            {% block tendencias %}
-                    <h2>Trends</h2>
-                    <div id='tendendias'>
-                        <a href="#">Link 1</a>
-                        <a href="#">Link 2</a>
-                        <a href="#">Link 3</a>
-                        <a href="#">Link 4</a>
-                    </div>
-            {% endblock %}
+            {% block lateral %}
+				<div class="animated fadeInLeft">
+  					<a href="#about">About</a>
+  					<a href="#services">Services</a>
+  					<a href="#clients">Clients</a>
+  					<a href="#contact">Contact</a>
+				</div>
+				{% endblock %}
 {% block content %}
 
-    <div class="col-sm-12" id="contenido" >
+    <div class="col-sm-12 animated fadeInLeft" id="contenido" >
     </div>
     <div class="row">
         <div id="loader"></div>
