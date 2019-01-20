@@ -4,56 +4,68 @@
     {% block title %}
     <title>Perfil</title>
     {% endblock %}
-{% block meta-content %}
-        <div class="main-profile borde" style="display: flex;flex-direction: column;justify-content: center;">
-            <h2 class="titulo">{% block titulo %}Informacion de la cuenta: {{ user.username}}{% endblock %}</h2>
-{% block content %}
-    <div>
-    <table  class="table table-responsive-xl">
-        <tr >
-            <td>
-                    <img src="http://{{ request.get_host }}/media/{{ user.perfil.foto_perfil }}" class="rounded-circle" alt="Cinque Terre" height="256" width="256" >
-            </td>
+{% block metacontent %}
+    <style>
+        .fondo{
+            background: url("http://{{ request.get_host }}/media/{{ user.perfil.foto_perfil_portada }}");
+            background-repeat: no-repeat;
+            background-size: cover;
+         }
+    </style>
+    <link href="/static/css/post.detail.css"  rel="stylesheet"/>
+    <div class="row">
+            <div class="col-md-2" ></div>
+            <div class="col-md-8 marco border ">
+                     <h2 class="titulo">{% block titulo %}{{ user.username}}{% endblock %}</h2>
+                    <div class="row fondo">
+                        <div class="col-md-4">
+                            <img  class="rounded-circle" style='height: 100%; width: 100%; object-fit: contain' src="http://{{ request.get_host }}/media/{{ user.perfil.foto_perfil }}"/>
+                        </div>
+                        <div class="col-md-8 ">
+                            <a href="{% url 'usuarios:actualizar' %}" type="button"><button class="btn btn-dark">Actualizar Informacion</button></a>
+                                <a href="{% url 'usuarios:cambiar_clave' %}" type="button"><button class="btn btn-dark">Cambiar Contraseña</button></a>
+                                <a href="{% url 'usuarios:cambiar_correo' %}" type="button"><button class="btn btn-dark">Actualizar Email</button></a>
+                        </div>
+                    </div>
 
-            <td>
-                <div class="row">
-                    <div class="col-sm-12">
-                <div class="list-group">
-                    <a class="list-group-item">Nombre: <strong>{{ user.first_name }}</strong></a>
-                    <a class="list-group-item">Apellido: <strong>{{ user.last_name }}</strong></a>
-                    <a class="list-group-item">Correo: <strong>{{ user.email }}</strong></a>
-                    <a class="list-group-item">Fecha Nacimiento: <strong>{{ user.perfil.fecha_nacimiento }}</strong></a>
+            </div>
+            <div class="col-md-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2" ></div>
+            <div class="col-md-8 marco border ">
+                    <div class="row">
+                        <div class="col-md-6 list-group">
+                             <a class="list-group-item">Nombre: <strong>{{ user.first_name }}</strong></a>
+                             <a class="list-group-item">Apellido: <strong>{{ user.last_name }}</strong></a>
+                             <a class="list-group-item">Correo: <strong>{{ user.email }}</strong></a>
+                             <a class="list-group-item">Fecha Nacimiento: <strong>{{ user.perfil.fecha_nacimiento }}</strong></a>
 
-                </div>
-                </div>
-                </div>
-            </td>
-            <td>
-                <div class="row">
-                <div class="col-sm-12">
 
-                 <div class="list-group">
-                            <a class="list-group-item bg-danger" >Afinidades</a>
+                        </div>
+                        <div class="col-md-6 list-group">
+                            <a class="list-group-item bg-dark" style="color: white;" >Afinidades</a>
                             {%  for afinidad in user.perfil.afinidades.all %}
                                 <a class="list-group-item">
                                     <strong>{{ afinidad }}</strong>
                                 </a>
                             {% endfor %}
-                 </div>
-                </div>
-                </div>
-            </td>
+                        </div>
+                    </div>
 
-
-        </tr>
-    </table>
+            </div>
+            <div class="col-md-2"></div>
     </div>
-    <div>
-        <a href="{% url 'usuarios:actualizar' %}" type="button"><button class="btn btn-outline-danger">Actualizar Informacion</button></a>
-        <a href="{% url 'usuarios:cambiar_clave' %}" type="button"><button class="btn btn-outline-danger">Cambiar Contraseña</button></a>
-        <a href="{% url 'usuarios:cambiar_correo' %}" type="button"><button class="btn btn-outline-danger">Actualizar Email</button></a>
+    <div class="row">
+    <div class="col-md-2" ></div>
+            <div class="col-md-8 marco border ">
+                     <h2 class="titulo">Publicaciones</h2>
+                    <div id="contenido">
+
+                    </div>
+            </div>
+    <div class="col-md-2" ></div>
     </div>
 {% endblock %}
-
-        </div>
+{% block bot %}
 {% endblock %}
