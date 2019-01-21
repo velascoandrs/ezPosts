@@ -16,15 +16,24 @@
         }
 
     }
+
+    const promesaLimpiar = ()=>{
+        return new Promise((resolve,reject)=>{
+            $("#contenido").empty()
+            resolve('Se ha limpiado');
+        })
+    };
     function limpiar() {
         valor=null;
         setPagina(0); //Antes era 1
-        setUrl(1)
+        setUrl(1);
         $("#contenido").empty();
     }
     function cargarPosts(pagina,inicio=false){
         let $contenido = $("#contenido");
         if (inicio){
+            $("#title").empty();
+            $("#title").append('<h2 class="titulo">Post más recientes</h2>');
             limpiar();
         }else {
             setUrl(pagina);
@@ -47,24 +56,31 @@
                     }else {
                         $contenido.append('<h2>No existen datos</h2>')
                     }
-                    $('#loader').empty();
                 }
         );
     }
-    $(window).scroll(()=>{
-                            var scroll_position_for_post_load = $(window).height() + $(window).scrollTop() + 100;
-                            if (scroll_position_for_post_load >= $(document).height()){
-                                pagina++;
-                                cargarPosts(pagina);
-                            }
-
-                        }
+    $(window).scroll(
+        ()=>{
+            var scroll_position_for_post_load = $(window).height() + $(window).scrollTop()+1;
+            if (scroll_position_for_post_load >= $(document).height()){
+                pagina++;
+                cargarPosts(pagina);
+            }
+        }
     );
     function buscarPost() {
-                valor = document.getElementById('buscar').value;
-                setPagina(1);
-                $("#contenido").empty();
-                cargarPosts(1)
+        promesaLimpiar()
+            .then(
+                (resultado)=>{
+                      console.log(resultado)
+                      valor = document.getElementById('buscar').value;
+                      setPagina(1);
+                      $("#contenido").empty();
+                      $("#title").empty();
+                      $("#title").append('<h2 class="titulo">Resultados de la busqueda</h2>');
+                      cargarPosts(1)
+                }
+            );
     }
 
     function PostRender(post){

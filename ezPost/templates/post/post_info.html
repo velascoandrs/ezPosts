@@ -5,37 +5,53 @@
 
 
 
-{% block tendencias %}
-         <h2>Trends</h2>
-                    <div id='tendendias'>
-                        <a href="#">Link 1</a>
-                        <a href="#">Link 2</a>
-                        <a href="#">Link 3</a>
-                        <a href="#">Link 4</a>
-                    </div>
-{% endblock %}
-
-{% block meta-content %}
-<div class="main-info borde" style="display: flex;flex-direction: column;justify-content: center;">
-<h2 class="titulo">{% block titulo %}{{ post.titulo }}{% endblock %}</h2>
-{% block content %}
+{% block metacontent %}
     <script>hljs.initHighlightingOnLoad();</script>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+
+    <h2 class="titulo">{% block titulo %}{{ post.titulo }}{% endblock %}</h2>
      <link href="/static/css/post.detail.css"  rel="stylesheet"/>
-    <div class="col-sm-16" id="contenido" >
+        <div class="col-md-12 border marco" id="contenido">
+            {% if user.is_authenticated and post.autor.id == user.id %}
+                <h6>Creado: {{ post.fecha_creacion }}</h6>
+                <a href="{% url 'posts:editar_post' post.id  %}"><button class="btn btn-dark">Actualizar</button></a>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">Eliminar</button>
+                 <!-- Modal -->
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                 <h4 class="modal-title titulo">Confirmar</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-        <div class="container">
+                                </div>
+                                    <div class="modal-body">
+                                        <p>Desea eliminar el Post?</p>
+                                    </div>
+                            <div class="modal-footer" style="background-color: black;>
+                                <a href="{% url 'posts:eliminar_post' post.id  %}">
+                                    <button type="button" class="btn btn-danger">Eliminar</button>
+                                 </a>
+                                <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                            </div>
+                    </div>
 
-                <h6> {{ post.autor.username }}</h6>
-                <h6> {{ post.fecha_creacion }}</h6>
-
-                {{ post.contenido | safe }}
-
-        </div>
     </div>
+  </div>
+            {% else %}
+            <h6> {{ post.autor.username }}</h6>
+            <h6>Creado: {{ post.fecha_creacion }}</h6>
+            {% endif %}
+             {{ post.contenido | safe }}
+        </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+{% endblock %}
 
-{% endblock %}
-</div>
-{% endblock %}
 {% block titulo_acerca %}Acerca del autor:{% endblock %}
  {% block contenidoAutor %}
         <img src="http://{{ request.get_host }}/media/{{ post.autor.perfil.foto_perfil }}"

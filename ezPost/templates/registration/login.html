@@ -5,31 +5,37 @@
     <title>Ingreso</title>
     {% endblock %}
 
-{% block meta-content %}
-    <div class="main-profile borde" style="display: flex;flex-direction: column;justify-content: center;">
+
     <h2 class="titulo">{% block titulo %}Ingresar{% endblock %}</h2>
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
+    <link href="/static/css/post.detail.css"  rel="stylesheet"/>
+            <div class="col-12 border marco">
             <form method="post">
 
                 {% csrf_token %}
                  {{ form |crispy }}
-                    <button class="btn btn-dark" type="submit">Login</button>
-            </form>
-                <a href="{% url 'password_reset'%}">He olvidado mi contraseña</a>
-   </div>
+
+                    <div class="row">
+                            <div class="col-3"></div>
+                                 <div class="col-md-3">
+                                    <button class="btn btn-outline-danger" type="submit">Login</button>
+                                 </div>
+                                 <div class="col-md-3">
+                                     <a href="{% url 'password_reset'%}">Olvide mi contraseña</a>
+                                 </div>
+                            <div class="col-3"></div>
+                        </div>
+                 </form>
+                <h3 class="titulo-top"></h3>
+                     <div class="main-profile">
+                         <div class="row">
+                            <div class="col-1"></div>
+                                 <div class="col-md-10">
+                                     <a href="{% url 'social:begin' 'twitter' %}"><button  class="btn btn-info">Ingresar con Twitter</button></a>
+                                 </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
+
             </div>
-        </div>
-
-
-
-    <h3 class="titulo-top"></h3>
-    <div class="main-profile">
-           <a href="{% url 'social:begin' 'twitter' %}"><button  class="btn btn-info ">Ingresar con Twitter</button></a>
-    </div>
-
     {% endblock %}
-    </div>
-{% endblock %}

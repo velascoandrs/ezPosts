@@ -185,11 +185,12 @@ CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'Custom',
         'height': 500,
+        'width': 'auto',
         'toolbar_Custom': [
             ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo','Preview'],
             ['Anchor', 'NumberedList', 'BulletedList', 'Find', 'Replace','CodeSnippet'],
             ['Image', 'ImageResponsive','Flash', 'Table', 'HorizontalRule', 'Youtube'],
-            ['TextColor', 'BGColor', 'FontSize'],
+            ['TextColor', 'BGColor', 'FontSize','PasteFromWord'],
             ['Smiley', 'SpecialChar'], ['Source']
         ],
         'extraPlugins': ','.join(

@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.generic.base import View
 from rest_framework import generics
@@ -65,5 +65,37 @@ def crear_post(request):
         form = PostFormulario()
     return render(request, 'post/crear_post.html', {'form': form})
 
+
+# Vista para poder actualizar el contenido de un Post
+@login_required(login_url='/')
+def editar_post(request, post_id):
+    #  Encontrar el post
+    post = get_object_or_404(Post, id=post_id)
+    # Validar que el usuario es propietario del post
+    if post.autor.id != request.user.id:
+        # Si no es propietario sera sera redireccionado al inicio
+        return redirect('/')
+    # Crear un formulario y llenarno con la instancia del post encontrado
+    form = PostFormulario(request.POST or None, instance=post)
+    # Verificar que el formulario este llenado correctamente
+    if form.is_valid():
+        # Guardar los cambios
+        form.save()
+        # Redireccionar a la pagina de informacion del perfil del usuario
+        return redirect('usuarios:mostrar_info')
+    # Renderizar el formulario en el template
+    return render(request, 'post/actualizar_post.html', {'form': form})
+
+
+# Vista para poder eliminar un Post
+@login_required(login_url='/')
+def eliminar_post(request, post_id):
+    #  Encontrar el post
+    post = get_object_or_404(Post, id=post_id)
+    if post.autor.id != request.user.id:
+        return redirect('/')
+    # Eliminar el post
+    post.delete()
+    return redirect('usuarios:mostrar_info')
 #  https://docs.djangoproject.com/es/2.1/topics/http/file-uploads/
 
