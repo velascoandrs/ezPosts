@@ -19,12 +19,32 @@
                      <h2 class="titulo">{% block titulo %}{{ user.username}}{% endblock %}</h2>
                     <div class="row fondo">
                         <div class="col-md-4">
-                            <img  class="rounded-circle" style='height: 100%; width: 100%; object-fit: contain' src="http://{{ request.get_host }}/media/{{ user.perfil.foto_perfil }}"/>
+                            <a href="" data-toggle="modal" data-target="#myModal">
+                                <img  class="img-thumbnail" style='height: auto; width: 100%; object-fit: contain' src="http://{{ request.get_host }}/media/{{ user.perfil.foto_perfil }}"/></a>
+                            <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <img  style='height: 100%; width: 100%; object-fit: contain' src="http://{{ request.get_host }}/media/{{ user.perfil.foto_perfil }}"/>
+                            </div>
+
+                        </div></div>
                         </div>
                         <div class="col-md-8 ">
-                            <a href="{% url 'usuarios:actualizar' %}" type="button"><button class="btn btn-dark">Actualizar Informacion</button></a>
-                                <a href="{% url 'usuarios:cambiar_clave' %}" type="button"><button class="btn btn-dark">Cambiar Contraseña</button></a>
-                                <a href="{% url 'usuarios:cambiar_correo' %}" type="button"><button class="btn btn-dark">Actualizar Email</button></a>
+                            <div class="row">
+                                <div class="col-md-4 rightAlign">
+                                    <div class="dropdown">
+                                        <button class="btn btn-dark btn-small dropdown-toggle" type="button" data-toggle="dropdown">Editar
+                                        <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="{% url 'usuarios:actualizar' %}">Actualizar Informacion</a></li>
+                                            <li><a class="dropdown-item"href="{% url 'usuarios:cambiar_clave' %}">Cambiar Contraseña</a></li>
+                                            <li><a class="dropdown-item"href="{% url 'usuarios:cambiar_correo' %}">Actualizar Email</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-8"></div>
+                            </div>
                         </div>
                     </div>
 

@@ -23,24 +23,25 @@
                         <div class="modal-dialog">
                             <!-- Modal content-->
                             <div class="modal-content">
-                                <div class="modal-header">
-                                 <h4 class="modal-title titulo">Confirmar</h4>
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <div class="modal-header">
+                                    <h4 class="modal-title titulo">Confirmar</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-                                </div>
-                                    <div class="modal-body">
-                                        <p>Desea eliminar el Post?</p>
                                     </div>
-                            <div class="modal-footer" style="background-color: black;>
-                                <a href="{% url 'posts:eliminar_post' post.id  %}">
-                                    <button type="button" class="btn btn-danger">Eliminar</button>
-                                 </a>
-                                <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                                    <div class="modal-body">
+                                        <p><strong>Desea eliminar el Post?</strong></p>
+                                        <img style="width: 100%; height: auto%; object-fit: contain;" src="http://127.0.0.1:8000/media/{{ post.portada }}">
+                                    </div>
+                                <div class="modal-footer" style="background-color: black;">
+                                    <a href="{% url 'posts:eliminar_post' post.id  %}">
+                                        <button type="button" class="btn btn-danger">Eliminar</button>
+                                    </a>
+                                    <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                                </div>
                             </div>
-                    </div>
 
-    </div>
-  </div>
+                        </div>
+                    </div>
             {% else %}
             <h6> {{ post.autor.username }}</h6>
             <h6>Creado: {{ post.fecha_creacion }}</h6>

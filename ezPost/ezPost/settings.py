@@ -186,23 +186,25 @@ CKEDITOR_CONFIGS = {
         'toolbar': 'Custom',
         'height': 500,
         'width': 'auto',
+
         'toolbar_Custom': [
             ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo','Preview'],
-            ['Anchor', 'NumberedList', 'BulletedList', 'Find', 'Replace','CodeSnippet'],
-            ['Image', 'ImageResponsive','Flash', 'Table', 'HorizontalRule', 'Youtube'],
-            ['TextColor', 'BGColor', 'FontSize','PasteFromWord'],
+            ['Anchor', 'NumberedList', 'Outdent', 'Indent', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'BulletedList', 'Find', 'Replace','CodeSnippet'],
+            ['Image', 'ImageResponsive', 'Table', 'HorizontalRule', 'Youtube'],
+            ['TextColor', 'BGColor', 'FontSize','PasteFromWord','Maximize'],
             ['Smiley', 'SpecialChar'], ['Source']
         ],
         'extraPlugins': ','.join(
             [
-                'codesnippet','imageresponsive','youtube'
+                'codesnippet','imageresponsive','youtube',
             ]),
     },
 
 }
 
-
+CKEDITOR_ALLOW_NONIMAGE_FILES = False
 CKEDITOR_IMAGE_BACKEND = 'pillow'  # manage.py generateckeditorthumbnails
+CKEDITOR_RESTRICT_BY_USER = True
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
