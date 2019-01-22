@@ -151,15 +151,15 @@ def cambiar_clave(request):
 @login_required(login_url='/')
 def cambiar_email(request):
     if request.method == 'POST':
-        form = CambiarEmailFormulario(request.POST)
+        form = CambiarEmailFormulario(request.user,request.POST)
         if form.is_valid():
             nuevo_correo = form.cleaned_data['email_nuevo']
             enviar_mensaje_confirmacion_correo(request.user, request, nuevo_correo)
             request.session['nuevo_email'] = nuevo_correo
             return redirect('usuarios:pedir_activacion_correo')
     else:
-        form = CambiarEmailFormulario(request.POST)
-    return render(request,'usuario/cambiar_email.html', {'form': form})
+        form = CambiarEmailFormulario(request.user)
+    return render(request, 'usuario/cambiar_email.html', {'form': form})
 
 
 # Vista que activa el nuevo correo del usuario recibe como parametro el token de activacion y el uid
