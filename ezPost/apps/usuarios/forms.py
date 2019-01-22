@@ -47,8 +47,18 @@ class PerfilUsuarioFormulario(ModelForm):
 
 
 class CambiarEmailFormulario(forms.Form):
-    password = forms.PasswordInput()
+    password = forms.CharField(widget=forms.PasswordInput, label="Contraseña")
     email_nuevo = forms.EmailField(label="Email")
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super(CambiarEmailFormulario, self).__init__(*args, **kwargs)
+
+    def clean_password(self):
+        password_digitada = self.cleaned_data['password']
+        if not self.user.check_password(password_digitada):
+            raise ValidationError("La contraseña escrita no es correcta!!")
+        return password_digitada
 
     def clean_email_nuevo(self):
         email = self.cleaned_data['email_nuevo']
