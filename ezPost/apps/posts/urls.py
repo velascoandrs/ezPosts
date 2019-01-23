@@ -1,5 +1,6 @@
 from django.urls import path
 from apps.posts.views import *
+from apps.usuarios.views import MostrarInformacionUsuario
 
 urlpatterns = [
     path('index',index_post,name='index_post'),

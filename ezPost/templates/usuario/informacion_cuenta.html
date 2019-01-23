@@ -7,7 +7,7 @@
 {% block metacontent %}
     <style>
         .fondo{
-            background: url("http://{{ request.get_host }}/media/{{ user.perfil.foto_perfil_portada }}");
+            background: url("http://{{ request.get_host }}/media/{{ usuario.perfil.foto_perfil_portada }}");
             background-repeat: no-repeat;
             background-size: cover;
          }
@@ -16,23 +16,26 @@
     <div class="row">
             <div class="col-md-2" ></div>
             <div class="col-md-8 marco border ">
-                     <h2 class="titulo">{% block titulo %}{{ user.username}}{% endblock %}</h2>
+                     <h2 class="titulo">{% block titulo %}{{ usuario.username}}{% endblock %}</h2>
                     <div class="row fondo">
                         <div class="col-md-4">
                             <a href="" data-toggle="modal" data-target="#myModal">
-                                <img  class="img-thumbnail" style='height: auto; width: 100%; object-fit: contain' src="http://{{ request.get_host }}/media/{{ user.perfil.foto_perfil }}"/></a>
+                                <img  class="img-thumbnail" style='height: auto; width: 100%; object-fit: contain' src="http://{{ request.get_host }}/media/{{ usuario.perfil.foto_perfil }}"/></a>
                             <div class="modal fade" id="myModal" role="dialog">
                         <div class="modal-dialog">
                             <!-- Modal content-->
                             <div class="modal-content">
-                                <img  style='height: 100%; width: 100%; object-fit: contain' src="http://{{ request.get_host }}/media/{{ user.perfil.foto_perfil }}"/>
+                                <img  style='height: 100%; width: 100%; object-fit: contain' src="http://{{ request.get_host }}/media/{{ usuario.perfil.foto_perfil }}"/>
                             </div>
 
-                        </div></div>
+                        </div>
+                            </div>
                         </div>
                         <div class="col-md-8 ">
                             <div class="row">
                                 <div class="col-md-4 rightAlign">
+
+                                    {% if user.is_authenticated  and user.id == usuario.id %}
                                     <div class="dropdown">
                                         <button class="btn btn-dark btn-small dropdown-toggle" type="button" data-toggle="dropdown">Editar
                                         <span class="caret"></span></button>
@@ -42,6 +45,7 @@
                                             <li><a class="dropdown-item"href="{% url 'usuarios:cambiar_correo' %}">Actualizar Email</a></li>
                                         </ul>
                                     </div>
+                                    {% endif %}
                                 </div>
                                 <div class="col-md-8"></div>
                             </div>
@@ -56,16 +60,16 @@
             <div class="col-md-8 marco border ">
                     <div class="row">
                         <div class="col-md-6 list-group">
-                             <a class="list-group-item">Nombre: <strong>{{ user.first_name }}</strong></a>
-                             <a class="list-group-item">Apellido: <strong>{{ user.last_name }}</strong></a>
-                             <a class="list-group-item">Correo: <strong>{{ user.email }}</strong></a>
-                             <a class="list-group-item">Fecha Nacimiento: <strong>{{ user.perfil.fecha_nacimiento }}</strong></a>
+                             <a class="list-group-item">Nombre: <strong>{{ usuario.first_name }}</strong></a>
+                             <a class="list-group-item">Apellido: <strong>{{ usuario.last_name }}</strong></a>
+                             <a class="list-group-item">Correo: <strong>{{ usuario.email }}</strong></a>
+                             <a class="list-group-item">Fecha Nacimiento: <strong>{{ usuario.perfil.fecha_nacimiento }}</strong></a>
 
 
                         </div>
                         <div class="col-md-6 list-group">
                             <a class="list-group-item bg-dark" style="color: white;" >Afinidades</a>
-                            {%  for afinidad in user.perfil.afinidades.all %}
+                            {%  for afinidad in usuario.perfil.afinidades.all %}
                                 <a class="list-group-item">
                                     <strong>{{ afinidad }}</strong>
                                 </a>
@@ -76,6 +80,7 @@
             </div>
             <div class="col-md-2"></div>
     </div>
+    {% block content %}
     <div class="row">
     <div class="col-md-2" ></div>
             <div class="col-md-8 marco border ">
@@ -86,6 +91,23 @@
             </div>
     <div class="col-md-2" ></div>
     </div>
+    {% endblock content %}
+
+ {% block js %}
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+    </script>
+
+<script src="/static/js/profile.js" id_user = {{ usuario.id }} type="text/javascript">
+
+</script>
+
+
+{% endblock %}
+
+
 {% endblock %}
 {% block bot %}
 {% endblock %}

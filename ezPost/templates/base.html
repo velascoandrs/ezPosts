@@ -60,7 +60,7 @@
         </a>
 
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{% url 'usuarios:mostrar_info' %}">Perfil</a>
+            <a class="dropdown-item" href="{% url 'usuarios:ver_perfil' user.id %}">Perfil</a>
             <a class="dropdown-item" href="{% url 'usuarios:actualizar' %}">Configuración Perfil</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{% url 'logout' %}">Salir</a>

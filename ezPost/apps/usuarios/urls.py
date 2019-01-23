@@ -22,5 +22,6 @@ urlpatterns = [
         activar_correo, name='activar_correo'),
     path('cambiarcorreo', cambiar_email,name='cambiar_correo'),
     path('pedircorreo', pedir_verificacion_email, name='pedir_activacion_correo'),
+    path('perfil/<pk>',MostrarInformacionUsuario.as_view(), name='ver_perfil')
 
 ]

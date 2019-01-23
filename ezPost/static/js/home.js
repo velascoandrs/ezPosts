@@ -1,6 +1,7 @@
     let pagina=1;
     let valor=null;
     let url= `/post/api/post?&page=`;
+    let custom_url = '';
     function inicio(){
         $(document).ready(function() {cargarPosts(1);});
     }
@@ -8,11 +9,15 @@
     function setPagina(valor) {
         pagina = valor;
     }
+
     function setUrl(pagina) {
         if(valor){
             url= `/post/api/post?titulo=${valor}&page=${pagina}`;
         }else {
             url= `/post/api/post?&page=${pagina}`;
+        }
+        if (custom_url){
+            url=`${custom_url}&page=${pagina}`
         }
 
     }
