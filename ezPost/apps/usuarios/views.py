@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from apps.usuarios.helpers import *
 from django.contrib.auth.forms import PasswordChangeForm
-
+from django.views.generic import DetailView
 # Create your views here.
 
 
@@ -126,6 +126,13 @@ def actualizar_perfil(request):
 @login_required(login_url='/')
 def mostrar_informacion_cuenta(request):
     return render(request, 'usuario/informacion_cuenta.html')
+
+
+# Vista que muestra el perfil de los usuarios
+class MostrarInformacionUsuario(DetailView):
+    model = User
+    template_name = 'usuario/informacion_cuenta.html'
+    context_object_name = "usuario"
 
 
 # Cambiar clave

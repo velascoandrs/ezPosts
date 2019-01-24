@@ -15,20 +15,23 @@ def index_post(request):
     return HttpResponse("Index de los posts")
 
 
-# Mostrar 10 ultimos posts clase prototipo
+# Mostrar el contenido de un post posts
 class PostView(DetailView):
     model = Post
     template_name = 'post/post_info.html'
     context_object_name = "post"
 
+    # Contar las visitas al post, se redefine el metodo get
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
+        # Solo cuenta visitas de usuarios registrados y que no sea el mismo autor
         if request.user.is_authenticated and self.object.autor.pk != request.user.id:
             Visualizacion.objects.create(post=self.object)
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
 
 
+# API de POSTS, solamente muestra los detalles del POST no el contenido
 class PostDetalleListApi(generics.ListAPIView):
     serializer_class = PostDetalleSerializado
     paginate_by = 10
@@ -36,8 +39,11 @@ class PostDetalleListApi(generics.ListAPIView):
     def get_queryset(self):
         queryset = Post.objects.all().order_by('-pk')
         titulo = self.request.query_params.get('titulo', None)
+        autor_id = self.request.query_params.get('autor_id',None)
         if titulo is not None:
             queryset = queryset.filter(titulo__contains=titulo)
+        if autor_id is not None:
+            queryset = queryset.filter(autor__id=autor_id)
         return queryset
 
 
