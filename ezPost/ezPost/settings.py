@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = '!xo!a_osieuk_&!#g(c#j!@$46+tpl%_63@%97uf8r!psq72g%'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -39,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.usuarios',
     'apps.posts',
-    'crispy_forms_foundation',
     # Para autentificarse usando redes sociales
     'social_django',  # <--
     'ckeditor',
@@ -102,7 +99,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
@@ -121,7 +117,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -134,7 +129,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
@@ -162,12 +156,10 @@ ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True
 SOCIAL_AUTH_TWITTER_KEY = "XTwJNYD8b9bekoIvJ4q5j1JUf"
 SOCIAL_AUTH_TWITTER_SECRET = "cmIe1H37tPXYgYqRKa5PyeQKhCkc62f3BDgaquRIEpCJlHBPTY"
 
-
 AUTH_USER_MODEL = "usuarios.User"
 
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 CKEDITOR_UPLOAD_PATH = 'uploads/'
-
 
 """
 CKEDITOR_CONFIGS = {
@@ -180,7 +172,6 @@ CKEDITOR_CONFIGS = {
 }
 """
 
-
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'Custom',
@@ -188,15 +179,16 @@ CKEDITOR_CONFIGS = {
         'width': 'auto',
 
         'toolbar_Custom': [
-            ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo','Preview'],
-            ['Anchor', 'NumberedList', 'Outdent', 'Indent', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'BulletedList', 'Find', 'Replace','CodeSnippet'],
+            ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo', 'Preview'],
+            ['Anchor', 'NumberedList', 'Outdent', 'Indent', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+             'JustifyBlock', 'BulletedList', 'Find', 'Replace', 'CodeSnippet'],
             ['Image', 'ImageResponsive', 'Table', 'HorizontalRule', 'Youtube'],
-            ['TextColor', 'BGColor', 'FontSize','PasteFromWord','Maximize'],
+            ['TextColor', 'BGColor', 'FontSize', 'PasteFromWord', 'Maximize'],
             ['Smiley', 'SpecialChar'], ['Source']
         ],
         'extraPlugins': ','.join(
             [
-                'codesnippet','imageresponsive','youtube',
+                'codesnippet', 'imageresponsive', 'youtube',
             ]),
     },
 
@@ -216,6 +208,6 @@ SERIALIZATION_MODULES = {
     'json': 'wadofstuff.django.serializers.json'
 }
 
-from crispy_forms_foundation.settings import *
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-CKEDITOR_ALLOW_NONIMAGE_FILES = False
+

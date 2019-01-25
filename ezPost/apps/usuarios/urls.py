@@ -1,11 +1,6 @@
-from django.conf import settings
-from django.contrib.auth.views import LogoutView, LoginView
-from django.contrib.auth import views as auth_views
 from django.urls import path
 from apps.usuarios.views import *
 from django.conf.urls import url
-from django.conf.urls import include
-from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [

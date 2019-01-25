@@ -38,7 +38,7 @@
         let $contenido = $("#contenido");
         if (inicio){
             $("#title").empty();
-            $("#title").append('<h2 class="titulo">Post más recientes</h2>');
+            $("#title").append('<h2 class="titulo"><strong>Post más recientes</strong></h2>');
             limpiar();
         }else {
             setUrl(pagina);
@@ -82,7 +82,7 @@
                       setPagina(1);
                       $("#contenido").empty();
                       $("#title").empty();
-                      $("#title").append('<h2 class="titulo">Resultados de la busqueda</h2>');
+                      $("#title").append('<h2 class="titulo"><strong>Resultados de la busqueda</strong></h2>');
                       cargarPosts(1)
                 }
             );
