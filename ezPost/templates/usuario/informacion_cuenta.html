@@ -55,35 +55,10 @@
             </div>
             <div class="col-md-2"></div>
     </div>
-    <div class="row">
-        <div class="col-md-2" ></div>
-            <div class="col-md-8 marco border ">
-                    <div class="row">
-                        <div class="col-md-6 list-group">
-                             <a class="list-group-item">Nombre: <strong>{{ usuario.first_name }}</strong></a>
-                             <a class="list-group-item">Apellido: <strong>{{ usuario.last_name }}</strong></a>
-                             <a class="list-group-item">Correo: <strong>{{ usuario.email }}</strong></a>
-                             <a class="list-group-item">Fecha Nacimiento: <strong>{{ usuario.perfil.fecha_nacimiento }}</strong></a>
-
-
-                        </div>
-                        <div class="col-md-6 list-group">
-                            <a class="list-group-item bg-dark" style="color: white;" >Afinidades</a>
-                            {%  for afinidad in usuario.perfil.afinidades.all %}
-                                <a class="list-group-item">
-                                    <strong>{{ afinidad }}</strong>
-                                </a>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-            </div>
-            <div class="col-md-2"></div>
-    </div>
     {% block content %}
     <div class="row">
     <div class="col-md-2" ></div>
-            <div class="col-md-8 marco border ">
+            <div class="col-md-8">
                      <h2 class="titulo">Publicaciones</h2>
                     <div id="contenido">
 
