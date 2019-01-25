@@ -25,7 +25,11 @@
     {% endblock %}
     <style>
         body{
-            background: whitesmoke;
+            background: #f3f5f5;
+        }
+
+        .nav-color{
+            background-color: #060002;
         }
 
     </style>
@@ -33,7 +37,7 @@
 
 <body>
 
-    <nav id="navbar" class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: rgb(6,1,8)">
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-dark fixed-top nav-color">
         {% block inicio %}<a class="navbar-brand" href="/" >ezPosts</a> {% endblock %}
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -89,25 +93,24 @@
    <div class="col-md-12" style="padding-top: 100px;">
    {% block metacontent %}
 		<div class="row">
-			<div class="col-sm-3" style="margin-right: 20px">
+			<div class="col-sm-2" style="margin-right: 20px">
 				{% block lateral %}
 
 				{% endblock %}
 			</div>
 
-			<div class="col-sm-7">
-            <div class="row">
-            <div id="title"><h2 class="titulo">{% block titulo %}{% endblock %}</h2></div>
+			<div class="col-sm-8">
+            <div id="title"><h2 class="titulo"><strong>{% block titulo %}{% endblock %}</strong></h2></div>
 					{% block content %}
-					<div class="col-sm-1"></div>
-					<div class="col-sm-10" id="contenido">
+                        <div class="row">
+					        <div class="col-sm-2"></div>
+					        <div class="col-sm-8" id="contenido"></div>
 
-                    </div>
-                    <div class="col-sm-2"></div>
+                            <div class="col-sm-2"></div>
+                        </div>
                 {% endblock %}
-				</div>
 			</div>
-			<div class="col-md-1"></div>
+			<div class="col-md-2"></div>
 		</div>
        {% endblock %}
 		</div>

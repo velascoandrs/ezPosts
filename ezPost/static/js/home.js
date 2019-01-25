@@ -95,7 +95,7 @@
                         <p><strong>Categoría: </strong>${post.afinidad}</p>
                         <p><strong>Visualizaciones: </strong>${post.visualizaciones}</p>
                             <p class="read-more">
-                                <a href="/post/ver/${post.pk}">Leer mas..</a>
+                                <a href="/post/ver/${post.pk}"><button class="btn btn-dark">Leer mas..</button></a>
                              </p>
                     </div>
                         <div class="meta">

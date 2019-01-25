@@ -55,12 +55,14 @@
 				</div>
 				{% endblock %}
 {% block content %}
-
-    <div class="col-sm-12 animated fadeInLeft" id="contenido" >
-    </div>
     <div class="row">
-        <div id="loader"></div>
+
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8 animated fadeInLeft" id="contenido"></div>
+        <div class="col-sm-2"></div>
+
     </div>
+
     {% block acerca %}{% endblock %}
 
 {% endblock %}
