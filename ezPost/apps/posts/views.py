@@ -66,7 +66,7 @@ def crear_post(request):
                         contenido=contenido
             )
             post.save()
-            return redirect('usuarios:mostrar_info')
+            return redirect('usuarios:ver_perfil', request.user.id)
     else:
         form = PostFormulario()
     return render(request, 'post/crear_post.html', {'form': form})
@@ -88,7 +88,7 @@ def editar_post(request, post_id):
         # Guardar los cambios
         form.save()
         # Redireccionar a la pagina de informacion del perfil del usuario
-        return redirect('usuarios:mostrar_info')
+        return redirect('usuarios:ver_perfil', request.user.id)
     # Renderizar el formulario en el template
     return render(request, 'post/actualizar_post.html', {'form': form})
 
@@ -102,6 +102,6 @@ def eliminar_post(request, post_id):
         return redirect('/')
     # Eliminar el post
     post.delete()
-    return redirect('usuarios:mostrar_info')
+    return redirect('usuarios:ver_perfil', request.user.id)
 #  https://docs.djangoproject.com/es/2.1/topics/http/file-uploads/
 

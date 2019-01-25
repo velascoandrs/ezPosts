@@ -1,17 +1,27 @@
 from django.db import models
-from ckeditor.fields import RichTextField
 from apps.usuarios.models import User, Afinidad
 from ckeditor_uploader.fields import RichTextUploadingField
 # Create your models here.from ckeditor.fields import RichTextField
 
 
+class TipoValoracion(models.Model):
+    nombre_tipo_valoracion = models.CharField(max_length=30, blank=False, null=False)
+
+
 class Valoracion(models.Model):
-    nombre = models.CharField(max_length=30, blank=False, null=False)
+    tipo_valoracion = models.ForeignKey(TipoValoracion, blank=False, on_delete=models.CASCADE, null=False)
+    usuario_valorador = models.ForeignKey(User, blank=False, on_delete=models.CASCADE, null=False)
+    fecha_valoracion = models.DateField(null=False, blank=False, auto_now=True)
+
+
+class TipoDenuncia(models.Model):
+    nombre_tipo_denuncia = models.CharField(max_length=30, blank=False, null=False)
 
 
 class Denuncia(models.Model):
-    descripcion = models.CharField(max_length=30, blank=False, null=False)
+    tipo_decuncia = models.ForeignKey(TipoDenuncia, blank=False, on_delete=models.CASCADE, null=False)
     fecha_denuncia = models.DateField(null=False, blank=False, auto_now=True)
+    usuario_denunciante = models.ForeignKey(User, blank=False, on_delete=models.CASCADE, null=False)
 
 
 class Post(models.Model):
