@@ -1,18 +1,31 @@
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.generic.base import View
 from rest_framework import generics
 from apps.posts.forms import *
 from apps.posts.helpers import handle_uploaded_file
-from apps.posts.models import Visualizacion
+from apps.posts.models import *
 from apps.usuarios.models import Afinidad
 from django.views.generic import ListView, DetailView
-from apps.posts.serializers import PostDetalleSerializado
+from apps.posts.serializers import PostDetalleSerializado, TipoDenunciaSerializado
 
 
 def index_post(request):
     return HttpResponse("Index de los posts")
+
+
+# Mostrar el contenido de un post v2
+def mostrar_post(request, post_id):
+    post = Post.objects.get(id=post_id)
+    existe_denuncia = False
+    if request.user.is_authenticated:
+        if post.denuncias.filter( usuario_denunciante=request.user.id):
+            existe_denuncia = True
+        if post.autor.pk != request.user.id:
+            Visualizacion.objects.create(post=post)
+    return render(request,'post/post_info.html', {'post': post,'existe_denuncia': existe_denuncia})
 
 
 # Mostrar el contenido de un post posts
@@ -105,3 +118,18 @@ def eliminar_post(request, post_id):
     return redirect('usuarios:ver_perfil', request.user.id)
 #  https://docs.djangoproject.com/es/2.1/topics/http/file-uploads/
 
+
+# Obtener los tipos de denuncia
+class TipoDenunciaListApi(generics.ListAPIView):
+    serializer_class = TipoDenunciaSerializado
+    queryset = TipoDenuncia.objects.all()
+
+
+def registrar_denuncia(request, id_post, id_tipo_denuncia):
+    denuncia = Denuncia.objects.create(
+                    tipo_decuncia_id=id_tipo_denuncia,
+                    usuario_denunciante_id=request.user.id
+                    )
+    post = Post.objects.get(pk=id_post)
+    post.denuncias.add(denuncia)
+    return HttpResponse("Ok")

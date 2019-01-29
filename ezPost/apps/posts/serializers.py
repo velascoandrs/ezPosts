@@ -1,8 +1,14 @@
 from rest_framework.fields import ReadOnlyField, SerializerMethodField
 from rest_framework.relations import RelatedField, PrimaryKeyRelatedField
 from rest_framework.serializers import ModelSerializer,SlugRelatedField
-from apps.posts.models import Post
+from apps.posts.models import Post, TipoDenuncia
 from apps.usuarios.serializers import UsuarioDetalleSerializado
+
+
+class TipoDenunciaSerializado(ModelSerializer):
+    class Meta:
+        model = TipoDenuncia
+        fields = '__all__'
 
 
 class PostDetalleSerializado(ModelSerializer):

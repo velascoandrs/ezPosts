@@ -45,12 +45,111 @@
             {% else %}
             <h6> {{ post.autor.username }}</h6>
             <h6>Creado: {{ post.fecha_creacion }}</h6>
+                        {% if not existe_denuncia %}
+                        <div class="dropdown" id="contenedor">
+                                        <button id="btn_tip_denuncias" class="btn btn-dark btn-small dropdown-toggle" type="button" data-toggle="dropdown">Denunciar
+                                        <span class="caret"></span></button>
+                                        <ul class="dropdown-menu" id="tipo_denuncias">
+
+                                        </ul>
+                        </div>
+                        {% else %}
+                            <h6 style="color: darkred;"><strong>Has denunciado este post</strong></h6>
+                        {% endif %}
+
             {% endif %}
              {{ post.contenido | safe }}
         </div>
         </div>
         <div class="col-md-2"></div>
     </div>
+    {% block js %}
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+    </script>
+    <script>
+
+
+
+        let $boton_denuncias = $("#btn_tip_denuncias");
+        let $bloque_padre = $("#tipo_denuncias");
+        let $contenedor = $("#contenedor");
+        let u_id = {{ user.id }}
+        const id_post = {{ post.id }}
+
+         console.log("id_usuario", u_id);
+
+         let url = `/post/denuncia/consultar?id_usuario=${u_id}`;
+         $.get(
+             url,
+             (data)=>{
+                 if (data){
+                     $contenedor.empty();
+                     $contenedor.append('<h6 style="color: darkred;"><strong>Has denunciado este post</strong></h6>')
+                 }
+             }
+         );
+
+
+        $boton_denuncias.click(
+            () =>{
+                $bloque_padre.empty();
+                const url = "http://127.0.0.1:8000/post/tipos_denuncias";
+                $.get(url,
+                    (data)=>{
+
+                        llenarMenu(data)
+                    }
+                )
+            });
+        function llenarMenu(datos) {
+        datos.results.forEach(
+                (dato) => {
+
+                    const html = $(`<li  value=${dato.id}><a id="tipo_denuncia" class="dropdown-item" href="#">${dato.nombre_tipo_denuncia}</a></li>`);
+                    $bloque_padre.append(html);
+                    html.click(
+                        ()=>{
+                            const id_tipo =html.val();
+                            const url = `/post/denuncia/${id_post}/${id_tipo}/`;
+                            $.get(
+                                url,
+                                (data)=>{
+                                    console.log(data);
+                                    if(data == 'Ok'){
+                                        console.log('esta qui')
+                                        $contenedor.empty();
+                                        $contenedor.append('<h6 style="color: darkred;"><strong>Has denunciado este post</strong></h6>')
+                                    }else {
+                                        $contenedor.append('<h4 style="color: darkred;">Error del servidor </h4>')
+                                    }
+                                }
+
+                            )
+                        }
+                    );
+                    //etiquetaSelectCiudades.appendChild(nuevaOption);
+                }
+            );
+
+        }
+
+        function denunciar() {
+            $("#tipo_denuncia").click(
+                () => {
+                    console.log("Se esondera");
+                    $contenedor.hide()
+                }
+            )
+        }
+
+
+
+
+    </script>
+    {% endblock %}
 {% endblock %}
 
 {% block titulo_acerca %}Acerca del autor:{% endblock %}
