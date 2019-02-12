@@ -3,18 +3,18 @@
 
     <h2 class="titulo">{% block titulo %}Registrarse{% endblock %}</h2>
 {% block content %}
-         <link href="/static/css/post.detail.css"  rel="stylesheet"/>
+         <link href="/static/css/post.detail.css" rel="stylesheet"/>
 
     <div class="col-12 border marco">
   <form method="post">
     {% csrf_token %}
     {{ form |crispy  }}
      <div class="row">
-         <div class="col-4"></div>
-         <div class="col-4">
+         <div class="col-md-5"></div>
+         <div class="col-md-2">
                  <button type="submit" class="btn btn-outline-danger">Comenzar</button>
          </div>
-         <div class="col-4"></div>
+         <div class="col-md-5"></div>
      </div>
   </form>
     </div>

@@ -125,11 +125,20 @@ class TipoDenunciaListApi(generics.ListAPIView):
     queryset = TipoDenuncia.objects.all()
 
 
+# Vista encargada de registrar denuncias referentes a un post
 def registrar_denuncia(request, id_post, id_tipo_denuncia):
+    # Se crea la denuncia respectiva
     denuncia = Denuncia.objects.create(
                     tipo_decuncia_id=id_tipo_denuncia,
                     usuario_denunciante_id=request.user.id
                     )
+    # Se encuentra el post que se denuncia
     post = Post.objects.get(pk=id_post)
+    tipo_denuncia = TipoDenuncia.objects.get(pk=id_tipo_denuncia)
+    # Se crea el aviso para notificar al autor del post
+    Aviso.objects.create(
+        contenido=f"Tu publicacion ha sido denunciada por: {tipo_denuncia.nombre_tipo_denuncia}",
+        post=post
+    )
     post.denuncias.add(denuncia)
     return HttpResponse("Ok")

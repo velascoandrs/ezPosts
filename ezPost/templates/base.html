@@ -15,18 +15,24 @@
     <script src="/static/js/bootstrap.bundle.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
 
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     <link href="/static/ckeditor/ckeditor/plugins/codesnippet/lib/highlight/styles/tomorrow-night-bright.css" rel="stylesheet">
     <link href="/static/css/animate.css" rel="stylesheet">
     <script src="/static/ckeditor/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
+
+
     {% block extraEstilos %}
     {% endblock %}
+
     <style>
+        {% block fondo %}
         body{
             background: #f3f5f5;
         }
+        {% endblock %}
 
         .nav-color{
             background-color: #060002;
@@ -34,7 +40,6 @@
 
     </style>
 </head>
-
 <body>
 
     <nav id="navbar" class="navbar navbar-expand-lg navbar-dark fixed-top nav-color">
@@ -57,9 +62,29 @@
             Crear Post
         </a>
       </li>
+
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle  glyphicon glyphicon-bullhorn"
+           href="#" id="navbarDropdown"
+           role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <strong>Avisos</strong>
+        </a>
+
+        <div  id="avisos" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+        </div>
+
+      </li>
+
+
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+           {% if user.perfil.foto_perfil  %}
             <img src="http://{{ request.get_host }}/media/{{ user.perfil.foto_perfil }}" class="rounded-circle" alt="Cinque Terre" height="32" width="32" />
+           {% else %}
+               <img src="/static/img/panda-icon-14.png" class="rounded-circle" alt="Cinque Terre" height="32" width="32" />
+           {% endif %}
             <strong>{{ user.username }}</strong>
         </a>
 
@@ -115,7 +140,6 @@
        {% endblock %}
 		</div>
         {% block bot  %}
-            <div style="background-color:#e5e5e5;padding:10px;margin-top:7px;"></div>
         {% endblock %}
 
     {% block js %}
