@@ -4,12 +4,17 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.generic.base import View
 from rest_framework import generics
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.response import Response
+
 from apps.posts.forms import *
 from apps.posts.helpers import handle_uploaded_file
 from apps.posts.models import *
 from apps.usuarios.models import Afinidad
 from django.views.generic import ListView, DetailView
-from apps.posts.serializers import PostDetalleSerializado, TipoDenunciaSerializado
+from apps.posts.serializers import PostDetalleSerializado, TipoDenunciaSerializado, AvisoSerializado
 
 
 def index_post(request):
@@ -47,6 +52,7 @@ class PostView(DetailView):
 # API de POSTS, solamente muestra los detalles del POST no el contenido
 class PostDetalleListApi(generics.ListAPIView):
     serializer_class = PostDetalleSerializado
+    permission_classes = (AllowAny,)
     paginate_by = 10
 
     def get_queryset(self):
@@ -58,6 +64,20 @@ class PostDetalleListApi(generics.ListAPIView):
         if autor_id is not None:
             queryset = queryset.filter(autor__id=autor_id)
         return queryset
+
+
+class AvisoAPI(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = AvisoSerializado
+
+    def get_queryset(self):
+        print("Este es el ID", self.request.user.id)
+        queryset = Aviso.objects\
+            .filter(post__autor__id=self.request.user.id)
+        return queryset
+
+
+
 
 
 # Vista que permitira la creacion del post

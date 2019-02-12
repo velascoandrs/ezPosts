@@ -115,7 +115,6 @@
         function llenarMenu(datos) {
         datos.results.forEach(
                 (dato) => {
-
                     const html = $(`<li  value=${dato.id}><a id="tipo_denuncia" class="dropdown-item" href="#">${dato.nombre_tipo_denuncia}</a></li>`);
                     $bloque_padre.append(html);
                     html.click(

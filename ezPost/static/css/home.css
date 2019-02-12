@@ -94,6 +94,10 @@ img.avatar {
   margin-bottom: 15px;
 }
 
+.rojo{
+  color: #ff133d;
+}
+
 code {
   border: 1px solid black;
   border-radius: 5px;

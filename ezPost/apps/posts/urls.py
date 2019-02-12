@@ -9,6 +9,7 @@ urlpatterns = [
     path('actualizar/<int:post_id>/', editar_post, name='editar_post'),
     path('eliminar/<int:post_id>/', eliminar_post, name='eliminar_post'),
     path('tipos_denuncias', TipoDenunciaListApi.as_view(), name='tipos_denuncias'),
+    path('api/avisos', AvisoAPI.as_view(), name='avisos_api'),
     path('denuncia/<int:id_post>/<int:id_tipo_denuncia>/', registrar_denuncia, name='denunciar'),
     path('ver/<int:post_id>', mostrar_post, name='ver_post'),
 ]
