@@ -100,25 +100,14 @@
 
          console.log("id_usuario", u_id);
 
-         let url = `/post/denuncia/consultar?id_usuario=${u_id}`;
-         $.get(
-             url,
-             (data)=>{
-                 if (data){
-                     $contenedor.empty();
-                     $contenedor.append('<h6 style="color: darkred;"><strong>Has denunciado este post</strong></h6>')
-                 }
-             }
-         );
 
 
         $boton_denuncias.click(
             () =>{
-                $bloque_padre.empty();
                 const url = "/post/tipos_denuncias";
                 $.get(url,
                     (data)=>{
-
+                        $bloque_padre.empty();
                         llenarMenu(data)
                     }
                 )
