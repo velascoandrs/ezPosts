@@ -1,51 +1,95 @@
 // Al cargar la pagina y cada 5 segundos
 // 1 consultar notificaciones
 let $status = $("#status");
-let $lista_avisos = $("#avisos");
+let $lista_avisos = $("#contenedor_avisos");
 setInterval("obtener_notificaciones();",5000);
 function obtener_notificaciones(){
-      let url = '';
+
+    console.log("CARGANDO..");
+      let url = '/post/api/avisos';
       $.get(
           url,
           (data)=>{
+              console.log(data);
               $lista_avisos.empty();
               buscar_nuevos_avisos(data);
               llenar_lista(data);
           }
       );
 }
+obtener_notificaciones();
 
-$lista_avisos.click(
-    $.get(
-        '',
+$status.click(()=>
+{
+    $.post(
+        '/post/avisos/marcar-revisado',
         (data)=>{
-            if(data == 'OK'){
+            if(data === 'OK'){
                 console.log("Avisos revisados")
+                console.log("CLICK DETECTADO");
+                pintar_campana_notificaiones(false);
             }else {
                 console.log("Error del servidor")
             }
         }
-    )
-);
-// 2 si existen notificaciones sin revisar -> marcar icono
-function buscar_nuevos_avisos(avisos) {
-    let esta_revisado = avisos.results.some(
-        (aviso)=>{
-            return aviso.esta_revisado === false
-        }
     );
-    if (!esta_revisado){
-        $status.removeClass("far fa-bel");
-        $status.addClass("fa fa-bel rojo")
+});
+
+function ajustar_menu() {
+    var count = $lista_avisos.children().length;
+    console.log(count);
+    if(count>5){
+        console.log("Se ajusto");
+        $lista_avisos.css({"height":"100px"})
     }
 }
+// 2 si existen notificaciones sin revisar -> marcar icono
+function buscar_nuevos_avisos(avisos) {
+    let no_esta_revisado = avisos.results.some(
+        (aviso)=>{
+            return aviso.esta_revisado == false
+        }
+
+    );
+    console.log(no_esta_revisado);
+    // Si no esta revisado el aviso pintar el icono de la campana
+    if (no_esta_revisado){
+        pintar_campana_notificaiones()
+    }
+}
+
+function pintar_campana_notificaiones(estado=true) {
+        console.log("Pintando");
+        if(estado){
+            $status.removeClass("far fa-bel");
+            $status.addClass("fa fa-bel rojo")
+        }else {
+            $status.removeClass("fa fa-bel rojo");
+            $status.addClass("far fa-bel")
+        }
+}
+
 function llenar_lista(datos) {
+        // Si no existen avisos
+        if(!datos.count){
+            console.log("Estoy aqui");
+            let html = `<a id="aviso" class="dropdown-item" href="#">Sin Notificaciones</a>`;
+            $lista_avisos.empty();
+            $lista_avisos.append(html);
+            return 0
+        }
         datos.results.forEach(
                 (dato) => {
-                    const html = $(`<li  value=${dato.id}><a id="aviso" class="dropdown-item" href="#">${dato.contenido}</a></li>`);
+                    console.log("Llenando");
+                    const html = $(`<a id="aviso" class="dropdown-item" href="#">
+                                        <p class="text-white">${dato.contenido}</p>
+                                        <span class="text-success">${dato.fecha_creacion}</span>
+                                    </a>`);
                     $lista_avisos.append(html);
+                    ajustar_menu();
                 }
             );
+        return 1
 }
 // Al hacer click en las notificaciones
 // 1. Marcar como revisadas las no revisadas -> hace una solicitud a una url

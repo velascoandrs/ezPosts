@@ -12,4 +12,5 @@ urlpatterns = [
     path('api/avisos', AvisoAPI.as_view(), name='avisos_api'),
     path('denuncia/<int:id_post>/<int:id_tipo_denuncia>/', registrar_denuncia, name='denunciar'),
     path('ver/<int:post_id>', mostrar_post, name='ver_post'),
+    path('avisos/marcar-revisado', marcar_avisos_revisados, name='marcar_avisos_revisados'),
 ]

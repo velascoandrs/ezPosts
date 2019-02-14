@@ -58,7 +58,7 @@
                         <div class="dropdown" id="contenedor">
                                         <button id="btn_tip_denuncias" class="btn btn-dark btn-small dropdown-toggle" type="button" data-toggle="dropdown">Denunciar
                                         <span class="caret"></span></button>
-                                        <ul class="dropdown-menu" id="tipo_denuncias">
+                                        <ul class="dropdown-menu fondo-transparente-negro" id="tipo_denuncias">
 
                                         </ul>
                         </div>
@@ -115,7 +115,7 @@
         function llenarMenu(datos) {
         datos.results.forEach(
                 (dato) => {
-                    const html = $(`<li  value=${dato.id}><a id="tipo_denuncia" class="dropdown-item" href="#">${dato.nombre_tipo_denuncia}</a></li>`);
+                    const html = $(`<li value=${dato.id}><a id="tipo_denuncia" class="dropdown-item text-white" href="#">${dato.nombre_tipo_denuncia}</a></li>`);
                     $bloque_padre.append(html);
                     html.click(
                         ()=>{

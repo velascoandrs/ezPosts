@@ -69,7 +69,7 @@
     text-align: center;
     margin: 24px 0 12px 0;
     position: relative;
-    height:40% ;
+    height:30% ;
     width: 100%;
 }
 
@@ -97,6 +97,18 @@ img.avatar {
 .rojo{
   color: #ff133d;
 }
+
+.dropdown-menu>a:hover {
+   color: #f3f5f5;
+   text-decoration: none;
+   background-color: #8a0e1b;
+}
+.dropdown-menu>li>a:hover {
+   color: #f3f5f5;
+   text-decoration: none;
+   background-color: #8a0e1b;
+}
+
 
 code {
   border: 1px solid black;
