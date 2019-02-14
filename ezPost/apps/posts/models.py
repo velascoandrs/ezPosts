@@ -26,7 +26,7 @@ class Denuncia(models.Model):
 
 class Post(models.Model):
     titulo = models.CharField(max_length=30, blank=False, null=False)
-    portada = models.ImageField(default='ninguna', upload_to='post/portadas', blank=False, null=False)
+    portada = models.ImageField(upload_to='post/portadas', blank=False, null=False)
     autor = models.ForeignKey(User, blank=False, on_delete=models.CASCADE, null=False)
     afinidad = models.ForeignKey(Afinidad, null=False, blank=False, on_delete=models.CASCADE)
     contenido = RichTextUploadingField(null=False, blank=False)
@@ -38,4 +38,10 @@ class Post(models.Model):
 class Visualizacion(models.Model):
     post = models.ForeignKey(Post, null=False, blank=False, on_delete=models.CASCADE)
 
+
+class Aviso(models.Model):
+    fecha_creacion = models.DateField(null=False, blank=False, auto_now=True)
+    esta_revisado = models.BooleanField(default=False)
+    contenido = models.CharField(max_length=30, blank=False, null=False)
+    post = models.ForeignKey(Post, blank=False, on_delete=models.CASCADE, null=False)
 

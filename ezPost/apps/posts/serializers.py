@@ -1,8 +1,14 @@
 from rest_framework.fields import ReadOnlyField, SerializerMethodField
 from rest_framework.relations import RelatedField, PrimaryKeyRelatedField
 from rest_framework.serializers import ModelSerializer,SlugRelatedField
-from apps.posts.models import Post
+from apps.posts.models import Post, TipoDenuncia, Aviso
 from apps.usuarios.serializers import UsuarioDetalleSerializado
+
+
+class TipoDenunciaSerializado(ModelSerializer):
+    class Meta:
+        model = TipoDenuncia
+        fields = '__all__'
 
 
 class PostDetalleSerializado(ModelSerializer):
@@ -16,3 +22,9 @@ class PostDetalleSerializado(ModelSerializer):
 
     def get_visualizaciones(self, obj):
         return obj.visualizacion_set.count()
+
+
+class AvisoSerializado(ModelSerializer):
+    class Meta:
+        model = Aviso
+        fields = '__all__'

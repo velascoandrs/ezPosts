@@ -1,41 +1,45 @@
 {% extends 'base.html' %}
+<style>
+{% block fondo %}
+        body{
+            background-image: url("/static/img/panda.jpg");
+        }
+{% endblock %}
+</style>
 {% load crispy_forms_tags %}
+
+
 
     {% block title %}
     <title>Ingreso</title>
     {% endblock %}
 
 
-    <h2 class="titulo">{% block titulo %}Ingresar{% endblock %}</h2>
-{% block content %}
-    <link href="/static/css/post.detail.css"  rel="stylesheet"/>
-            <div class="col-12 border marco">
+{% block metacontent %}
+    <div class="row" >
+            <div class="col-md-4"> </div>
+            <div class="col-md-4 border fondo-transparente-negro">
+            <link href="/static/css/post.detail.css"  rel="stylesheet"/>
+                <h2 class="titulo">{% block titulo %}Login{% endblock %}</h2>
             <form method="post">
-
                 {% csrf_token %}
+                <div class="imgcontainer">
+                <img src="/static/img/panda-icon-14.png" alt="Avatar" >
+                </div>
                  {{ form |crispy }}
-
-                    <div class="row">
-                            <div class="col-3"></div>
-                                 <div class="col-md-3">
-                                    <button class="btn btn-outline-danger" type="submit">Login</button>
-                                 </div>
-                                 <div class="col-md-3">
-                                     <a href="{% url 'password_reset'%}">Olvide mi contraseña</a>
-                                 </div>
-                            <div class="col-3"></div>
-                        </div>
-                 </form>
-                <h3 class="titulo-top"></h3>
-                     <div class="main-profile">
-                         <div class="row">
-                            <div class="col-1"></div>
-                                 <div class="col-md-10">
-                                     <a href="{% url 'social:begin' 'twitter' %}"><button  class="btn btn-info">Ingresar con Twitter</button></a>
-                                 </div>
-                            <div class="col-1"></div>
-                        </div>
-                    </div>
+                <button class="btn btn-dark btn-block btn-espaciado">Login</button>
+            </form>
+            <form method="post" action="{% url 'password_reset'%}">
+                {% csrf_token %}
+                <button class="btn btn-outline-danger btn-block btn-espaciado">Olvide mi contraseña</button>
+            </form>
+            <h3 class="titulo-top-claro"></h3>
+            <form action="{% url 'social:begin' 'twitter' %}" method="post">
+                {% csrf_token %}
+                <button  class="btn btn-info btn-block btn-espaciado">Ingresar con Twitter</button>
+            </form>
 
             </div>
-    {% endblock %}
+           <div class="col-md-4"> </div>
+    </div>
+{% endblock %}

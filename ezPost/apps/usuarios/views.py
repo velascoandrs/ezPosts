@@ -45,12 +45,12 @@ def signup(request):
             return redirect('usuarios:pedir_activacion_cuenta')
     else:
         form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'registration/signup.html', {'form': form})
 
 
 # Vista que renderiza el mensaje de confirmacion del email
 def pedir_activacion_cuenta(request):
-    return render(request, 'pedir_activacion_cuenta.html')
+    return render(request, 'usuario/pedir_activacion_cuenta.html')
 
 
 # Vista que renderiza el mensaje de confirmacion del email
@@ -73,7 +73,7 @@ def volver_enviar_correo_activacion(request):
         enviar_mensaje_verificacion_correo(user, request)
         return redirect('usuarios:pedir_activacion_cuenta')
     else:
-        return render(request, 'activacion_cuenta_invalida.html')
+        return render(request, 'usuario/activacion_cuenta_invalida.html')
 
 
 # Vista que activa la cuenta del usuario recibe como parametro el token de activacion y el uid
@@ -94,7 +94,7 @@ def activar_cuenta(request, uidb64, token):
         login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         return redirect('/')
     else:
-        return render(request, 'activacion_cuenta_invalida.html')
+        return render(request, 'usuario/activacion_cuenta_invalida.html')
 
 
 @login_required(login_url='/')
@@ -108,7 +108,7 @@ def actualizar_perfil(request):
             formulario_perfil.save(commit=False)
             formulario_perfil.save_m2m()
             messages.success(request, 'Tu perfil fue actualizado exitosamente')
-            return redirect('usuarios:mostrar_info')
+            return redirect('usuarios:ver_perfil', request.user.id)
         else:
             messages.error(request, 'Por favor corriga los siguiente errores')
     else:
@@ -187,4 +187,4 @@ def activar_correo(request, uidb64, token):
         login(request, user)
         return redirect('/')
     else:
-        return render(request, 'activacion_cuenta_invalida.html')
+        return render(request, 'usuario/activacion_cuenta_invalida.html')

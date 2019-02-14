@@ -19,7 +19,7 @@ def generar_mensaje(request, user, template):
 
 def enviar_mensaje_verificacion_correo(user, request, asunto='Activacion de tu cuenta ezPost'):
     asunto = asunto
-    mensaje = generar_mensaje(request, user, 'email_activacion.html')
+    mensaje = generar_mensaje(request, user, 'usuario/email_activacion.html')
     user.email_user(asunto, mensaje)
 
 

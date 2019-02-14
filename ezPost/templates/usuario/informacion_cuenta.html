@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
-
-
-    {% block title %}
+{% block title %}
     <title>Perfil</title>
     {% endblock %}
 {% block metacontent %}
@@ -19,8 +17,12 @@
                      <h2 class="titulo">{% block titulo %}{{ usuario.username}}{% endblock %}</h2>
                     <div class="row fondo">
                         <div class="col-md-4">
-                            <a href="" data-toggle="modal" data-target="#myModal">
-                                <img  class="img-thumbnail" style='height: auto; width: 100%; object-fit: contain' src="http://{{ request.get_host }}/media/{{ usuario.perfil.foto_perfil }}"/></a>
+                                {% if user.perfil.foto_perfil  %}
+                                    <a href="" data-toggle="modal" data-target="#myModal">
+                                    <img  alt="foto-perfil" class="img-thumbnail" style='height: auto; width: 100%; object-fit: contain' src="http://{{ request.get_host }}/media/{{ usuario.perfil.foto_perfil }}"/></a>
+                                {% else %}
+                                    <img src="/static/img/panda-icon-14.png" alt="foto-perfil" class="img-thumbnail" style='height: auto; width: 100%; object-fit: contain' />
+                                {% endif %}
                             <div class="modal fade" id="myModal" role="dialog">
                         <div class="modal-dialog">
                             <!-- Modal content-->
