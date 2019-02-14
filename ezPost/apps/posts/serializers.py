@@ -25,6 +25,8 @@ class PostDetalleSerializado(ModelSerializer):
 
 
 class AvisoSerializado(ModelSerializer):
+    post = PostDetalleSerializado(many=False,read_only=True)
+
     class Meta:
         model = Aviso
         fields = '__all__'

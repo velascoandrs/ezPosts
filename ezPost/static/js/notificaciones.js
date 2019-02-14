@@ -38,7 +38,7 @@ $status.click(()=>
 function ajustar_menu() {
     var count = $lista_avisos.children().length;
     console.log(count);
-    if(count>5){
+    if(count>3){
         console.log("Se ajusto");
         $lista_avisos.css({"height":"100px"})
     }
@@ -81,15 +81,31 @@ function llenar_lista(datos) {
         datos.results.forEach(
                 (dato) => {
                     console.log("Llenando");
-                    const html = $(`<a id="aviso" class="dropdown-item" href="#">
+                    const post = post_detail_render(dato.post);
+                    const html = $(`<a id="aviso" class="dropdown-item" href="/post/ver/${dato.post.pk}">
                                         <p class="text-white">${dato.contenido}</p>
                                         <span class="text-success">${dato.fecha_creacion}</span>
+                                        ${post}
                                     </a>`);
                     $lista_avisos.append(html);
                     ajustar_menu();
                 }
             );
         return 1
+}
+
+function post_detail_render(post){
+	    let html =`<div class="blog-card">
+                    <div class="description">
+                        <h1 class="titulo">${post.titulo}</h1>  
+                    </div>
+                        <div class="meta">
+                         <div class="photo" style="background-image: url(${post.portada})">
+                          </div>
+                         </div>
+                    
+                    </div>`;
+    return html
 }
 // Al hacer click en las notificaciones
 // 1. Marcar como revisadas las no revisadas -> hace una solicitud a una url

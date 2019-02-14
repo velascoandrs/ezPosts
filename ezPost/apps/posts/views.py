@@ -153,7 +153,6 @@ class AvisoAPI(generics.ListAPIView):
     serializer_class = AvisoSerializado
 
     def get_queryset(self):
-        print("Este es el ID", self.request.user.id)
         queryset = Aviso.objects \
             .filter(post__autor__id=self.request.user.id)
         return queryset
