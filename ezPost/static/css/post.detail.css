@@ -24,6 +24,7 @@ p > img {
   overflow: hidden;
   z-index: 0;
 }
+
 .blog-card a {
   color: inherit;
 }

@@ -56,9 +56,12 @@
                         {% if not existe_denuncia %}
                         {% if user.is_authenticated %}
                         <div class="dropdown" id="contenedor">
-                                        <button id="btn_tip_denuncias" class="btn btn-dark btn-small dropdown-toggle" type="button" data-toggle="dropdown">Denunciar
+                                        <button id="btn_tip_denuncias"
+                                                class="btn btn-dark btn-small dropdown-toggle"
+                                                type="button" data-toggle="dropdown">Denunciar
                                         <span class="caret"></span></button>
-                                        <ul class="dropdown-menu fondo-transparente-negro" id="tipo_denuncias">
+                                        <ul class="dropdown-menu fondo-transparente-negro" style="border-color: white"
+                                            id="tipo_denuncias">
 
                                         </ul>
                         </div>

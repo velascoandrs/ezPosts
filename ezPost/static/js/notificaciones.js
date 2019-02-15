@@ -84,7 +84,7 @@ function llenar_lista(datos) {
                     const post = post_detail_render(dato.post);
                     const html = $(`<a id="aviso" class="dropdown-item" href="/post/ver/${dato.post.pk}">
                                         <p class="text-white">${dato.contenido}</p>
-                                        <span class="text-success">${dato.fecha_creacion}</span>
+                                        <span class="text-success">${interpretar_fecha(dato.fecha_creacion)}</span>
                                         ${post}
                                     </a>`);
                     $lista_avisos.append(html);
@@ -94,18 +94,22 @@ function llenar_lista(datos) {
         return 1
 }
 
+function interpretar_fecha(fecha) {
+    const fecha_ = moment(fecha, "YYYY-MM-DD");
+    const fecha_actual = moment(new Date().toISOString().split('T')[0]);
+    return 'hace '+fecha_actual.diff(fecha_, 'days')+' dias'
+}
+
 function post_detail_render(post){
-	    let html =`<div class="blog-card">
+	    return `<div class="blog-card">
                     <div class="description">
-                        <h1 class="titulo">${post.titulo}</h1>  
+                        <h2 class="titulo text-dark"><strong>${post.titulo}</strong></h2>  
                     </div>
                         <div class="meta">
                          <div class="photo" style="background-image: url(${post.portada})">
                           </div>
                          </div>
-                    
-                    </div>`;
-    return html
+                </div>`;
 }
 // Al hacer click en las notificaciones
 // 1. Marcar como revisadas las no revisadas -> hace una solicitud a una url
