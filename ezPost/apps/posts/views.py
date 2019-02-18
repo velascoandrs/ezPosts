@@ -11,7 +11,7 @@ from apps.posts.models import *
 from apps.usuarios.models import Afinidad
 from django.views.generic import DetailView
 from apps.posts.serializers import PostDetalleSerializado, TipoDenunciaSerializado, AvisoSerializado
-
+from django.db.models import Q
 
 def index_post(request):
     return HttpResponse("Index de los posts")
@@ -55,6 +55,13 @@ class PostDetalleListApi(generics.ListAPIView):
         queryset = Post.objects.all().order_by('-pk')
         titulo = self.request.query_params.get('titulo', None)
         autor_id = self.request.query_params.get('autor_id', None)
+
+        # Si el usuario esta logeado filtrar los posts por las afinidades del usuario y los post creados por el mismo
+        if self.request.user.is_authenticated and autor_id is None and titulo is None:
+            usuario = User.objects.get(id=self.request.user.id)
+            queryset = Post.objects\
+                .filter(Q(afinidad__in=usuario.perfil.afinidades.all()) | Q(autor=usuario)).order_by('-pk')
+
         if titulo is not None:
             queryset = queryset.filter(titulo__contains=titulo)
         if autor_id is not None:
