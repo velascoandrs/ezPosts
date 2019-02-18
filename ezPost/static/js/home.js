@@ -89,8 +89,10 @@
     }
 
     function PostRender(post){
-	    let html =`<div class="blog-card">
+	    let html =`<div  class="bg-dark" style="border-radius: 5px">
+                    <div class="blog-card">
                     <div class="description">
+                        
                         <h1>${post.titulo}</h1>
                         <p><strong>Categoría: </strong>${post.afinidad}</p>
                         <p><strong>Visualizaciones: </strong>${post.visualizaciones}</p>
@@ -101,12 +103,25 @@
                         <div class="meta">
                          <div class="photo" style="background-image: url(${post.portada})">
                           </div>
-                           <ul class="details">
-                             <li><a href="/usuario/perfil/${post.autor.pk}">${post.autor.username}</a></li>
-                             <li >${post.fecha_creacion}</li>
-                            </ul>
                          </div>
                     
+                    </div>
+                                        <div class="row text-white">
+                            <div class="col-sm-1" style="margin: -10px"></div>
+                            <div class="col-sm-2 imgcontainer" >
+                                <a  href="/usuario/perfil/${post.autor.pk}">
+                                <image 
+                                 src="${post.autor.perfil.foto_perfil}" 
+                                 class="img-responsive rounded-circle" style="width: 64px;height: 64px"/>
+                                 </a>
+                            </div>
+                            <div class="col-sm-9" style="margin-top: 20px">
+                                <a href="/usuario/perfil/${post.autor.pk}"><strong class="text-white">${post.autor.username}</strong></a>
+                                <br>
+                                <span>${interpretar_fecha(post.fecha_creacion)}</span>
+                            </div>
+                        </div>
+
                     </div>`;
     return html
 }
