@@ -118,6 +118,10 @@ img.avatar {
    background-color: #8a0e1b;
 }
 
+ .contenedor {
+      overflow-y: auto;
+}
+
 
 code {
   border: 1px solid black;
@@ -125,11 +129,24 @@ code {
 
 }
 #id_contenido { width: auto !important; }
+
 @media only screen and (max-width:620px) {
   /* For mobile phones: */
   .menu, .main, .right {
     width:100%;
   }
+    .contenedor {
+        overflow-y: auto;
+        position: relative;
+    }
 
+}
+
+@media only screen and (max-width:1000px) {
+    .contenedor {
+        overflow-y: auto;
+        height: 350px;
+        position: relative;
+    }
 
 }

@@ -151,10 +151,11 @@ def registrar_denuncia(request, id_post, id_tipo_denuncia):
 class AvisoAPI(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = AvisoSerializado
+    paginate_by = 3
 
     def get_queryset(self):
         queryset = Aviso.objects \
-            .filter(post__autor__id=self.request.user.id)
+            .filter(post__autor__id=self.request.user.id).order_by('-pk')
         return queryset
 
 
