@@ -84,9 +84,13 @@ img.avatar {
 
 }
 
-  .fondo-transparente-negro{
+.fondo-transparente-negro{
   color: white;
   background-color: rgba(0, 0, 0, 0.9);
+}
+
+.fondo-transparente-plomo{
+  background-color: rgba(18, 18, 18, 0.9);
 }
 
 .btn-espaciado{
@@ -98,15 +102,24 @@ img.avatar {
   color: #ff133d;
 }
 
-.dropdown-menu>a:hover {
-   color: #f3f5f5;
+.dropdown-menu>div>a:hover {
    text-decoration: none;
    background-color: #8a0e1b;
 }
-.dropdown-menu>li>a:hover {
-   color: #f3f5f5;
+.dropdown-menu>a:hover {
+   color: #f5f5f5;
    text-decoration: none;
    background-color: #8a0e1b;
+}
+
+.dropdown-menu>li>a:hover {
+   color: #f5f5f5;
+   text-decoration: none;
+   background-color: #8a0e1b;
+}
+
+ .contenedor {
+      overflow-y: auto;
 }
 
 
@@ -116,11 +129,24 @@ code {
 
 }
 #id_contenido { width: auto !important; }
+
 @media only screen and (max-width:620px) {
   /* For mobile phones: */
   .menu, .main, .right {
     width:100%;
   }
+    .contenedor {
+        overflow-y: auto;
+        position: relative;
+    }
 
+}
+
+@media only screen and (max-width:1000px) {
+    .contenedor {
+        overflow-y: auto;
+        height: 350px;
+        position: relative;
+    }
 
 }

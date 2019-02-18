@@ -188,7 +188,7 @@ CKEDITOR_CONFIGS = {
         ],
         'extraPlugins': ','.join(
             [
-                'codesnippet', 'imageresponsive', 'youtube',
+                'codesnippet', 'imageresponsive', 'youtube'
             ]),
     },
 

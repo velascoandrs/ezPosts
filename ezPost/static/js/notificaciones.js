@@ -2,25 +2,64 @@
 // 1 consultar notificaciones
 let $status = $("#status");
 let $lista_avisos = $("#contenedor_avisos");
+let url_inicial = '/post/api/avisos?page=';
+let altura = 1662;
+let lista_esta_clickeada = false;
 setInterval("obtener_notificaciones();",5000);
-function obtener_notificaciones(){
 
-    console.log("CARGANDO..");
-      let url = '/post/api/avisos';
-      $.get(
+
+function obtener_notificaciones(){
+    if(!lista_esta_clickeada){
+        console.log("CARGANDO..");
+        altura = 1662;
+      let url = '/post/api/avisos?page=1';
+      cargarDatos(url)
+    }else {
+        console.log("ESPERANDO..");
+    }
+
+}
+
+
+$(window).click(
+    ()=>{
+        console.log("Se oculto");
+        lista_esta_clickeada = false;
+    }
+);
+function cargarDatos(url,limpiar=true) {
+    console.log(url);
+    $.get(
           url,
           (data)=>{
               console.log(data);
-              $lista_avisos.empty();
+              if (limpiar){
+                  $lista_avisos.empty();
+              }
               buscar_nuevos_avisos(data);
               llenar_lista(data);
           }
       );
 }
+
+$lista_avisos.scroll(
+    ()=>{
+            var scroll_position_for_post_load = $lista_avisos.height() + $lista_avisos.scrollTop()+1;
+            console.log(scroll_position_for_post_load,altura,$lista_avisos.height());
+            if (scroll_position_for_post_load >= altura ){
+                pagina++;
+                altura = scroll_position_for_post_load+$lista_avisos.height()-1;
+                let url = url_inicial+pagina;
+                cargarDatos(url,false);
+            }
+        }
+);
+
 obtener_notificaciones();
 
 $status.click(()=>
 {
+    lista_esta_clickeada = false === lista_esta_clickeada;
     $.post(
         '/post/avisos/marcar-revisado',
         (data)=>{
@@ -38,9 +77,9 @@ $status.click(()=>
 function ajustar_menu() {
     var count = $lista_avisos.children().length;
     console.log(count);
-    if(count>5){
+    if(count>3){
         console.log("Se ajusto");
-        $lista_avisos.css({"height":"100px"})
+        $lista_avisos.css({"height":"350px","position":"relative"})
     }
 }
 // 2 si existen notificaciones sin revisar -> marcar icono
@@ -81,15 +120,35 @@ function llenar_lista(datos) {
         datos.results.forEach(
                 (dato) => {
                     console.log("Llenando");
-                    const html = $(`<a id="aviso" class="dropdown-item" href="#">
+                    const post = post_detail_render(dato.post);
+                    const html = $(`<a id="aviso" class="dropdown-item" href="/post/ver/${dato.post.pk}">
                                         <p class="text-white">${dato.contenido}</p>
-                                        <span class="text-success">${dato.fecha_creacion}</span>
+                                        <span class="text-success">${interpretar_fecha(dato.fecha_creacion)}</span>
+                                        ${post}
                                     </a>`);
                     $lista_avisos.append(html);
                     ajustar_menu();
                 }
             );
         return 1
+}
+
+function interpretar_fecha(fecha) {
+    const fecha_ = moment(fecha, "YYYY-MM-DD");
+    const fecha_actual = moment(new Date().toISOString().split('T')[0]);
+    return 'hace '+fecha_actual.diff(fecha_, 'days')+' dias'
+}
+
+function post_detail_render(post){
+	    return `<div class="blog-card">
+                    <div class="description">
+                        <h2 class="titulo text-dark"><strong>${post.titulo}</strong></h2>  
+                    </div>
+                        <div class="meta">
+                         <div class="photo" style="background-image: url(${post.portada})">
+                          </div>
+                         </div>
+                </div>`;
 }
 // Al hacer click en las notificaciones
 // 1. Marcar como revisadas las no revisadas -> hace una solicitud a una url
