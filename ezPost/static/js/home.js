@@ -2,6 +2,7 @@
     let valor=null;
     let url= `/post/api/post?&page=`;
     let custom_url = '';
+
     function inicio(){
         $(document).ready(function() {cargarPosts(1);});
     }
@@ -43,11 +44,13 @@
         }else {
             setUrl(pagina);
         }
+        mostrar_animacion_cargando();
         console.log(url);
         $.get(url,
                 (data)=> {
                     let html = "";
                     if (data) {
+                        remover_animacion_cargando();
                         data.results.forEach(
                             (post)=>{
                                 let portada_img="https://bitcoinist.com/wp-content/uploads/2018/10/shutterstock_597074750.jpg";
@@ -73,6 +76,29 @@
             }
         }
     );
+
+    function mostrar_animacion_cargando() {
+        if ($("#loader")){
+            remover_animacion_cargando();
+        }
+        $("#contenido").append('<div id="loader" class="d-flex justify-content-center">'+
+            '<div class="p-2">'+
+            '<div  class="spinner-grow" role="status">'+
+            '<span class="sr-only">Loading...</span>'+
+            '</div><div  class="spinner-grow" role="status">'+
+            '<span class="sr-only">Loading...</span>'+
+            '</div>' +
+            '<div  class="spinner-grow" role="status">'+
+            '<span class="sr-only">Loading...</span>'+
+            '</div>' +
+            '</div>' +
+            '</div>');
+    }
+
+    function remover_animacion_cargando() {
+        $("#loader").remove();
+    }
+
     function buscarPost() {
         promesaLimpiar()
             .then(
@@ -87,7 +113,6 @@
                 }
             );
     }
-
     function PostRender(post){
 	    let html =`<div  class="bg-dark" style="border-radius: 5px">
                     <div class="blog-card">
@@ -106,7 +131,7 @@
                          </div>
                     
                     </div>
-                                        <div class="row text-white">
+                            <div class="row text-white">
                             <div class="col-sm-1" style="margin: -10px"></div>
                             <div class="col-sm-2 imgcontainer" >
                                 <a  href="/usuario/perfil/${post.autor.pk}">
