@@ -1,3 +1,4 @@
+import django_filters
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
@@ -5,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
+from apps.posts.filters import PostFilter
 from apps.posts.forms import *
 from apps.posts.helpers import handle_uploaded_file
 from apps.posts.models import *
@@ -43,6 +45,14 @@ class PostView(DetailView):
             Visualizacion.objects.create(post=self.object)
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
+
+# API de POSTS v2, solamente muestra los detalles del POST no el contenido
+class PostDetalleListApiv2(generics.ListAPIView):
+    serializer_class = PostDetalleSerializado
+    permission_classes = (AllowAny,)
+    paginate_by = 10
+    queryset = Post.objects.all().order_by('-pk')
+    filter_class = PostFilter
 
 
 # API de POSTS, solamente muestra los detalles del POST no el contenido
