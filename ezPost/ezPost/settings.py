@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'rest_framework',
     'crispy_forms',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
