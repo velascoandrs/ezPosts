@@ -134,16 +134,16 @@
                             <div class="row text-white">
                             <div class="col-sm-1" style="margin: -10px"></div>
                             <div class="col-sm-2 imgcontainer" >
-                                <a  href="/usuario/perfil/${post.autor.pk}">
+                                <a  href="/usuario/perfil/${post.publicacion.autor.pk}">
                                 <image 
-                                 src="${post.autor.perfil.foto_perfil}" 
+                                 src="${post.publicacion.autor.perfil.foto_perfil}" 
                                  class="img-responsive rounded-circle" style="width: 64px;height: 64px"/>
                                  </a>
                             </div>
                             <div class="col-sm-9" style="margin-top: 20px">
-                                <a href="/usuario/perfil/${post.autor.pk}"><strong class="text-white">${post.autor.username}</strong></a>
+                                <a href="/usuario/perfil/${post.publicacion.autor.pk}"><strong class="text-white">${post.publicacion.autor.username}</strong></a>
                                 <br>
-                                <span>${interpretar_fecha(post.fecha_creacion)}</span>
+                                <span>${interpretar_fecha(post.publicacion.fecha_creacion)}</span>
                             </div>
                         </div>
 

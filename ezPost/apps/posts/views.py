@@ -1,7 +1,7 @@
 import django_filters
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -24,9 +24,9 @@ def mostrar_post(request, post_id):
     post = Post.objects.get(id=post_id)
     existe_denuncia = False
     if request.user.is_authenticated:
-        if post.denuncias.filter(usuario_denunciante=request.user.id):
+        if post.publicacion.denuncias.filter(usuario_denunciante=request.user.id):
             existe_denuncia = True
-        if post.autor.pk != request.user.id:
+        if post.publicacion.autor.pk != request.user.id:
             Visualizacion.objects.create(post=post)
     return render(request, 'post/post_info.html', {'post': post, 'existe_denuncia': existe_denuncia})
 
@@ -70,12 +70,12 @@ class PostDetalleListApi(generics.ListAPIView):
         if self.request.user.is_authenticated and autor_id is None and titulo is None:
             usuario = User.objects.get(id=self.request.user.id)
             queryset = Post.objects\
-                .filter(Q(afinidad__in=usuario.perfil.afinidades.all()) | Q(autor=usuario)).order_by('-pk')
+                .filter(Q(afinidad__in=usuario.perfil.afinidades.all()) | Q(publicacion__autor=usuario)).order_by('-pk')
 
         if titulo is not None:
             queryset = queryset.filter(titulo__contains=titulo)
         if autor_id is not None:
-            queryset = queryset.filter(autor__id=autor_id)
+            queryset = queryset.filter(publicacion__autor__id=autor_id)
         return queryset
 
 
@@ -89,12 +89,16 @@ def crear_post(request):
         contenido = request.POST.get('contenido', '')
         afinidad_pk = request.POST.get('afinidad', '')
         afinidad = Afinidad.objects.get(pk=afinidad_pk)
+        post_publicacion = Publicacion.objects.create(
+            autor=request.user
+        )
+        post_publicacion.save()
         post = Post.objects.create(
-            autor=request.user,
             titulo=titulo,
             portada=portada,
             afinidad=afinidad,
-            contenido=contenido
+            contenido=contenido,
+            publicacion=post_publicacion
         )
         post.save()
         return redirect('usuarios:ver_perfil', request.user.id)
@@ -129,7 +133,7 @@ def editar_post(request, post_id):
 def eliminar_post(request, post_id):
     #  Encontrar el post
     post = get_object_or_404(Post, id=post_id)
-    if post.autor.id != request.user.id:
+    if post.publicacion.autor.id != request.user.id:
         return redirect('/')
     # Eliminar el post
     post.delete()
@@ -146,22 +150,23 @@ class TipoDenunciaListApi(generics.ListAPIView):
 
 
 # Vista encargada de registrar denuncias referentes a un post
-def registrar_denuncia(request, id_post, id_tipo_denuncia):
+@login_required(login_url="/")
+def registrar_denuncia(request, id_publicacion, id_tipo_denuncia):
     # Se crea la denuncia respectiva
     denuncia = Denuncia.objects.create(
         tipo_decuncia_id=id_tipo_denuncia,
         usuario_denunciante_id=request.user.id
     )
     # Se encuentra el post que se denuncia
-    post = Post.objects.get(pk=id_post)
+    publicacion = Publicacion.objects.get(pk=id_publicacion)
     tipo_denuncia = TipoDenuncia.objects.get(pk=id_tipo_denuncia)
     # Se crea el aviso para notificar al autor del post
     Aviso.objects.create(
         contenido=f"Tu publicacion ha sido denunciada por: {tipo_denuncia.nombre_tipo_denuncia}",
-        post=post
+        publicacion=publicacion
     )
-    post.denuncias.add(denuncia)
-    return HttpResponse("Ok")
+    publicacion.denuncias.add(denuncia)
+    return JsonResponse({'respuesta': 'OK'})
 
 
 # API DE AVISOS
@@ -172,7 +177,7 @@ class AvisoAPI(generics.ListAPIView):
 
     def get_queryset(self):
         queryset = Aviso.objects \
-            .filter(post__autor__id=self.request.user.id).order_by('-pk')
+            .filter(publicacion__autor__id=self.request.user.id).order_by('-pk')
         return queryset
 
 
@@ -182,7 +187,7 @@ class AvisoAPI(generics.ListAPIView):
 def marcar_avisos_revisados(request):
     if request.method == 'POST':
         Aviso.objects \
-            .filter(post__autor__id=request.user.id) \
+            .filter(publicacion__autor__id=request.user.id) \
             .filter(esta_revisado=False) \
             .update(esta_revisado=True)
-        return HttpResponse("OK")
+        return JsonResponse({'mensaje': 'OK'})

@@ -24,15 +24,19 @@ class Denuncia(models.Model):
     usuario_denunciante = models.ForeignKey(User, blank=False, on_delete=models.CASCADE, null=False)
 
 
+class Publicacion(models.Model):
+    fecha_creacion = models.DateField(null=False, blank=False, auto_now=True)
+    autor = models.ForeignKey(User, blank=False, on_delete=models.CASCADE, null=False)
+    denuncias = models.ManyToManyField(Denuncia, blank=True, related_name='denuncias')
+    valoraciones = models.ManyToManyField(Valoracion, blank=True, related_name='valoraciones')
+
+
 class Post(models.Model):
     titulo = models.CharField(max_length=30, blank=False, null=False)
     portada = models.ImageField(upload_to='post/portadas', blank=False, null=False)
-    autor = models.ForeignKey(User, blank=False, on_delete=models.CASCADE, null=False)
     afinidad = models.ForeignKey(Afinidad, null=False, blank=False, on_delete=models.CASCADE)
     contenido = RichTextUploadingField(null=False, blank=False)
-    fecha_creacion = models.DateField(null=False, blank=False, auto_now=True)
-    denuncias = models.ManyToManyField(Denuncia, blank=True, related_name='denuncias')
-    valoraciones = models.ManyToManyField(Valoracion, blank=True, related_name='valoraciones')
+    publicacion = models.ForeignKey(Publicacion, null=False, blank=False, on_delete=models.CASCADE)
 
 
 class Visualizacion(models.Model):
@@ -43,5 +47,5 @@ class Aviso(models.Model):
     fecha_creacion = models.DateField(null=False, blank=False, auto_now=True)
     esta_revisado = models.BooleanField(default=False)
     contenido = models.CharField(max_length=30, blank=False, null=False)
-    post = models.ForeignKey(Post, blank=False, on_delete=models.CASCADE, null=False)
+    publicacion = models.ForeignKey(Publicacion, blank=False, on_delete=models.CASCADE, null=False)
 

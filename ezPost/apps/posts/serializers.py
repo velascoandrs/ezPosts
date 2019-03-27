@@ -1,7 +1,6 @@
-from rest_framework.fields import ReadOnlyField, SerializerMethodField
-from rest_framework.relations import RelatedField, PrimaryKeyRelatedField
+from rest_framework.fields import  SerializerMethodField
 from rest_framework.serializers import ModelSerializer,SlugRelatedField
-from apps.posts.models import Post, TipoDenuncia, Aviso
+from apps.posts.models import Post, TipoDenuncia, Aviso, Publicacion
 from apps.usuarios.serializers import UsuarioDetalleSerializado
 
 
@@ -11,22 +10,29 @@ class TipoDenunciaSerializado(ModelSerializer):
         fields = '__all__'
 
 
+class PublicacionSerializada(ModelSerializer):
+    autor = UsuarioDetalleSerializado()
+    class Meta:
+        model = Publicacion
+        fields = ('pk', 'autor', 'fecha_creacion')
+
+
 class PostDetalleSerializado(ModelSerializer):
     afinidad = SlugRelatedField(slug_field='nombre_afinidad', read_only=True)
-    autor = UsuarioDetalleSerializado(many=False, read_only=True)
+    publicacion = PublicacionSerializada()
     visualizaciones = SerializerMethodField()
 
     class Meta:
         model = Post
-        fields = ('pk', 'titulo', 'portada', 'fecha_creacion','visualizaciones','afinidad', 'autor',)
+        fields = ('pk', 'titulo', 'portada', 'visualizaciones', 'afinidad', 'publicacion')
 
     def get_visualizaciones(self, obj):
         return obj.visualizacion_set.count()
 
 
 class AvisoSerializado(ModelSerializer):
-    post = PostDetalleSerializado(many=False,read_only=True)
-
+    publicacion = PublicacionSerializada(many=False, read_only=True)
+    
     class Meta:
         model = Aviso
         fields = '__all__'
