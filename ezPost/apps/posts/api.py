@@ -49,8 +49,10 @@ class PostDetalleListApi(generics.ListAPIView):
         # Si el usuario esta logeado filtrar los posts por las afinidades del usuario y los post creados por el mismo
         if self.request.user.is_authenticated and autor_id is None and titulo is None:
             usuario = User.objects.get(id=self.request.user.id)
-            queryset = Post.objects\
+            queryset_filtrado = queryset\
                 .filter(Q(afinidad__in=usuario.perfil.afinidades.all()) | Q(publicacion__autor=usuario)).order_by('-pk')
+            if queryset_filtrado:
+                queryset = queryset_filtrado
 
         if titulo is not None:
             queryset = queryset.filter(titulo__contains=titulo)

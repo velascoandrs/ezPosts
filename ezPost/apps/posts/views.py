@@ -51,8 +51,10 @@ def crear_post(request):
         contenido = request.POST.get('contenido', '')
         afinidad_pk = request.POST.get('afinidad', '')
         afinidad = Afinidad.objects.get(pk=afinidad_pk)
+        tipo_publicacion = TipoPublicacion.objects.get(id=1)
         post_publicacion = Publicacion.objects.create(
-            autor=request.user
+            autor=request.user,
+            tipo_publicacion=tipo_publicacion,
         )
         post_publicacion.save()
         post = Post.objects.create(

@@ -99,7 +99,7 @@
         let $bloque_padre = $("#tipo_denuncias");
         let $contenedor = $("#contenedor");
         let u_id = {% if user.id  %}{{ user.id }}{% else %}''{% endif %}
-        const id_post = {{ post.id }}
+        const id_publicacion = {{ post.publicacion.id }}
 
          console.log("id_usuario", u_id);
 
@@ -123,13 +123,12 @@
                     html.click(
                         ()=>{
                             const id_tipo =html.val();
-                            const url = `/post/denuncia/${id_post}/${id_tipo}/`;
+                            const url = `/post/denuncia/${id_publicacion}/${id_tipo}/`;
                             $.get(
                                 url,
                                 (data)=>{
                                     console.log(data);
-                                    if(data == 'Ok'){
-                                        console.log('esta qui')
+                                    if(data.respuesta === 'OK'){
                                         $contenedor.empty();
                                         $contenedor.append('<h6 style="color: darkred;"><strong>Has denunciado este post</strong></h6>')
                                     }else {

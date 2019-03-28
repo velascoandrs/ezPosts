@@ -41,7 +41,13 @@ class Post(models.Model):
     portada = models.ImageField(upload_to='post/portadas', blank=False, null=False)
     afinidad = models.ForeignKey(Afinidad, null=False, blank=False, on_delete=models.CASCADE)
     contenido = RichTextUploadingField(null=False, blank=False)
-    publicacion = models.ForeignKey(Publicacion, null=False, blank=False, on_delete=models.CASCADE)
+    publicacion = models.OneToOneField(Publicacion, on_delete=models.CASCADE, primary_key=True)
+
+
+class PocketPost(models.Model):
+    contenido = models.CharField(max_length=250, blank=False, null=False)
+    imagen = models.ImageField(upload_to='post/portadas', blank=True, null=True)
+    publicacion = models.OneToOneField(Publicacion, on_delete=models.CASCADE, primary_key=True)
 
 
 class Visualizacion(models.Model):

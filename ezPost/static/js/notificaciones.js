@@ -118,11 +118,11 @@ function llenar_lista(datos) {
         datos.results.forEach(
                 (dato) => {
                     console.log("Llenando");
-                    const post = post_detail_render(dato.post);
-                    const html = $(`<a id="aviso" class="dropdown-item" href="/post/ver/${dato.post.pk}">
+                    const publicacion = post_detail_render(dato);
+                    const html = $(`<a id="aviso" class="dropdown-item" href="/post/ver/${0}">
                                         <p class="text-white">${dato.contenido}</p>
-                                        <span class="text-success">${interpretar_fecha(dato.fecha_creacion)}</span>
-                                        ${post}
+                                        <span class="text-success">${"interpretar_fecha(dato.fecha_creacion)"}</span>
+                                        ${publicacion}
                                     </a>`);
                     $lista_avisos.append(html);
                     ajustar_menu();
@@ -137,13 +137,14 @@ function interpretar_fecha(fecha) {
     return 'hace '+fecha_actual.diff(fecha_, 'days')+' dias'
 }
 
-function post_detail_render(post){
+function post_detail_render(aviso){
+        console.log("aviso ", aviso);
 	    return `<div class="blog-card">
                     <div class="description">
-                        <h2 class="titulo text-dark"><strong>${post.titulo}</strong></h2>  
+                        <h2 class="titulo text-dark"><strong>${aviso.publicacion.post.titulo}</strong></h2>  
                     </div>
                         <div class="meta">
-                         <div class="photo" style="background-image: url(${post.portada})">
+                         <div class="photo" style="background-image: url(${aviso.publicacion.post.portada})">
                           </div>
                          </div>
                 </div>`;
