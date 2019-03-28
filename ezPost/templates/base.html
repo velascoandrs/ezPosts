@@ -157,8 +157,9 @@
         {% endblock %}
 		</div>
     <script src="/static/js/moment.js"></script>
+    {% if user.is_authenticated %}
     <script src="/static/js/notificaciones.js"></script>
-
+    {% endif %}
     {% block js %}
     {% endblock %}
 

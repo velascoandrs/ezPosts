@@ -1,10 +1,10 @@
 from django.urls import path
 from apps.posts.views import *
+from apps.posts.api import *
 
 urlpatterns = [
-    path('index', index_post,name='index_post'),
+    path('index', index_post, name='index_post'),
     path('crearPost', crear_post, name='crear_post'),
-    #path('ver/<pk>', PostView.as_view(),name='ver_post'),
     path('api/post', PostDetalleListApi.as_view(), name='post_list'),
     path('api/v2/post',PostDetalleListApiv2.as_view(),name='post_list_v2'),
     path('actualizar/<int:post_id>/', editar_post, name='editar_post'),

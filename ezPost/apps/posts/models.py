@@ -24,11 +24,16 @@ class Denuncia(models.Model):
     usuario_denunciante = models.ForeignKey(User, blank=False, on_delete=models.CASCADE, null=False)
 
 
+class TipoPublicacion(models.Model):
+    nombre = models.CharField(null=False, blank=False,max_length=30)
+
+
 class Publicacion(models.Model):
     fecha_creacion = models.DateField(null=False, blank=False, auto_now=True)
     autor = models.ForeignKey(User, blank=False, on_delete=models.CASCADE, null=False)
     denuncias = models.ManyToManyField(Denuncia, blank=True, related_name='denuncias')
     valoraciones = models.ManyToManyField(Valoracion, blank=True, related_name='valoraciones')
+    tipo_publicacion = models.ForeignKey(TipoPublicacion, blank=False, on_delete=models.CASCADE, null=False)
 
 
 class Post(models.Model):

@@ -1,19 +1,13 @@
-import django_filters
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated, AllowAny
-
-from apps.posts.filters import PostFilter
 from apps.posts.forms import *
 from apps.posts.helpers import handle_uploaded_file
 from apps.posts.models import *
 from apps.usuarios.models import Afinidad
 from django.views.generic import DetailView
-from apps.posts.serializers import PostDetalleSerializado, TipoDenunciaSerializado, AvisoSerializado
-from django.db.models import Q
+
 
 def index_post(request):
     return HttpResponse("Index de los posts")
@@ -45,38 +39,6 @@ class PostView(DetailView):
             Visualizacion.objects.create(post=self.object)
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
-
-# API de POSTS v2, solamente muestra los detalles del POST no el contenido
-class PostDetalleListApiv2(generics.ListAPIView):
-    serializer_class = PostDetalleSerializado
-    permission_classes = (AllowAny,)
-    paginate_by = 10
-    queryset = Post.objects.all().order_by('-pk')
-    filter_class = PostFilter
-
-
-# API de POSTS, solamente muestra los detalles del POST no el contenido
-class PostDetalleListApi(generics.ListAPIView):
-    serializer_class = PostDetalleSerializado
-    permission_classes = (AllowAny,)
-    paginate_by = 10
-
-    def get_queryset(self):
-        queryset = Post.objects.all().order_by('-pk')
-        titulo = self.request.query_params.get('titulo', None)
-        autor_id = self.request.query_params.get('autor_id', None)
-
-        # Si el usuario esta logeado filtrar los posts por las afinidades del usuario y los post creados por el mismo
-        if self.request.user.is_authenticated and autor_id is None and titulo is None:
-            usuario = User.objects.get(id=self.request.user.id)
-            queryset = Post.objects\
-                .filter(Q(afinidad__in=usuario.perfil.afinidades.all()) | Q(publicacion__autor=usuario)).order_by('-pk')
-
-        if titulo is not None:
-            queryset = queryset.filter(titulo__contains=titulo)
-        if autor_id is not None:
-            queryset = queryset.filter(publicacion__autor__id=autor_id)
-        return queryset
 
 
 # Vista que permitira la creacion del post
@@ -140,15 +102,6 @@ def eliminar_post(request, post_id):
     return redirect('usuarios:ver_perfil', request.user.id)
 
 
-#  https://docs.djangoproject.com/es/2.1/topics/http/file-uploads/
-
-
-# Obtener los tipos de denuncia
-class TipoDenunciaListApi(generics.ListAPIView):
-    serializer_class = TipoDenunciaSerializado
-    queryset = TipoDenuncia.objects.all()
-
-
 # Vista encargada de registrar denuncias referentes a un post
 @login_required(login_url="/")
 def registrar_denuncia(request, id_publicacion, id_tipo_denuncia):
@@ -167,18 +120,6 @@ def registrar_denuncia(request, id_publicacion, id_tipo_denuncia):
     )
     publicacion.denuncias.add(denuncia)
     return JsonResponse({'respuesta': 'OK'})
-
-
-# API DE AVISOS
-class AvisoAPI(generics.ListAPIView):
-    permission_classes = (IsAuthenticated,)
-    serializer_class = AvisoSerializado
-    paginate_by = 3
-
-    def get_queryset(self):
-        queryset = Aviso.objects \
-            .filter(publicacion__autor__id=self.request.user.id).order_by('-pk')
-        return queryset
 
 
 #  Cambiar avisos por revisado

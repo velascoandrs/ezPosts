@@ -64,8 +64,6 @@ $status.click(()=>
         '/post/avisos/marcar-revisado',
         (data)=>{
             if(data === 'OK'){
-                console.log("Avisos revisados")
-                console.log("CLICK DETECTADO");
                 pintar_campana_notificaiones(false);
             }else {
                 console.log("Error del servidor")
