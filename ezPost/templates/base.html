@@ -159,6 +159,14 @@
     <script src="/static/js/moment.js"></script>
     {% if user.is_authenticated %}
     <script src="/static/js/notificaciones.js"></script>
+    {% else %}
+        <script>
+            function interpretar_fecha(fecha) {
+                  const fecha_ = moment(fecha, "YYYY-MM-DD");
+                 const fecha_actual = moment(new Date().toISOString().split('T')[0]);
+                 return 'hace '+fecha_actual.diff(fecha_, 'days')+' dias'
+            }
+        </script>
     {% endif %}
     {% block js %}
     {% endblock %}

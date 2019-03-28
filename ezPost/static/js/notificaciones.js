@@ -75,7 +75,7 @@ $status.click(()=>
 function ajustar_menu() {
     var count = $lista_avisos.children().length;
     console.log(count);
-    if(count>3){
+    if(count>=3){
         console.log("Se ajusto");
         $lista_avisos.css({"height":"350px","position":"relative"})
     }
