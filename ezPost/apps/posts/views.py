@@ -15,13 +15,13 @@ def index_post(request):
 
 # Mostrar el contenido de un post v2
 def mostrar_post(request, post_id):
-    post = Post.objects.get(id=post_id)
+    post = Post.objects.get(pk=post_id)
     existe_denuncia = False
     if request.user.is_authenticated:
         if post.publicacion.denuncias.filter(usuario_denunciante=request.user.id):
             existe_denuncia = True
         if post.publicacion.autor.pk != request.user.id:
-            Visualizacion.objects.create(post=post)
+            Visualizacion.objects.create(post_visualizado=post)
     return render(request, 'post/post_info.html', {'post': post, 'existe_denuncia': existe_denuncia})
 
 
@@ -36,7 +36,7 @@ class PostView(DetailView):
         self.object = self.get_object()
         # Solo cuenta visitas de usuarios registrados y que no sea el mismo autor
         if request.user.is_authenticated and self.object.autor.pk != request.user.id:
-            Visualizacion.objects.create(post=self.object)
+            Visualizacion.objects.create(post_visualizado=self.object)
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
 
@@ -75,9 +75,9 @@ def crear_post(request):
 @login_required(login_url='/')
 def editar_post(request, post_id):
     #  Encontrar el post
-    post = get_object_or_404(Post, id=post_id)
+    post = get_object_or_404(Post, pk=post_id)
     # Validar que el usuario es propietario del post
-    if post.autor.id != request.user.id:
+    if post.publicacion.autor.id != request.user.id:
         # Si no es propietario sera sera redireccionado al inicio
         return redirect('/')
     # Crear un formulario y llenarno con la instancia del post encontrado
@@ -96,7 +96,7 @@ def editar_post(request, post_id):
 @login_required(login_url='/')
 def eliminar_post(request, post_id):
     #  Encontrar el post
-    post = get_object_or_404(Post, id=post_id)
+    post = get_object_or_404(Post, pk=post_id)
     if post.publicacion.autor.id != request.user.id:
         return redirect('/')
     # Eliminar el post

@@ -19,12 +19,12 @@
         </div>
         <div class="col-md-8">
 
-    <h2 class="titulo">{% block titulo %}{{ post.titulo }}{% endblock %}</h2>
+    <h2 class="titulo text-white">{% block titulo %}{{ post.titulo }}{% endblock %}</h2>
      <link href="/static/css/post.detail.css"  rel="stylesheet"/>
         <div class="col-md-12 border marco" id="contenido">
             {% if user.is_authenticated and post.publicacion.autor.id == user.id %}
                 <h6>Creado: {{ post.publicacion.fecha_creacion }}</h6>
-                <a href="{% url 'posts:editar_post' post.id  %}"><button class="btn btn-dark">Actualizar</button></a>
+                <a href="{% url 'posts:editar_post' post.pk  %}"><button class="btn btn-dark">Actualizar</button></a>
                 <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">Eliminar</button>
                  <!-- Modal -->
                     <div class="modal fade" id="myModal" role="dialog">
@@ -41,7 +41,7 @@
                                         <img style="width: 100%; height: auto; object-fit: contain;" src="http://127.0.0.1:8000/media/{{ post.portada }}">
                                     </div>
                                 <div class="modal-footer" style="background-color: black;">
-                                    <a href="{% url 'posts:eliminar_post' post.id  %}">
+                                    <a href="{% url 'posts:eliminar_post' post.pk  %}">
                                         <button type="button" class="btn btn-danger">Eliminar</button>
                                     </a>
                                     <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>

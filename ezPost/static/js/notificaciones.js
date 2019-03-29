@@ -119,9 +119,9 @@ function llenar_lista(datos) {
                 (dato) => {
                     console.log("Llenando");
                     const publicacion = post_detail_render(dato);
-                    const html = $(`<a id="aviso" class="dropdown-item" href="/post/ver/${0}">
+                    const html = $(`<a id="aviso" class="dropdown-item" href="/post/ver/${dato.publicacion.post.pk}">
                                         <p class="text-white">${dato.contenido}</p>
-                                        <span class="text-success">${"interpretar_fecha(dato.fecha_creacion)"}</span>
+                                        <span class="text-success">${interpretar_fecha(dato.fecha_creacion)}</span>
                                         ${publicacion}
                                     </a>`);
                     $lista_avisos.append(html);

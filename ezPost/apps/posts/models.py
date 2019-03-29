@@ -51,7 +51,7 @@ class PocketPost(models.Model):
 
 
 class Visualizacion(models.Model):
-    post = models.ForeignKey(Post, null=False, blank=False, on_delete=models.CASCADE)
+    post_visualizado = models.ForeignKey(Post, null=False, blank=False, on_delete=models.CASCADE)
 
 
 class Aviso(models.Model):
