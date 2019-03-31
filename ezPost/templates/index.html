@@ -33,7 +33,38 @@
     transform: rotate(1800deg);
   }
 }
+    [type="file"] {
+  height: 0;
+  overflow: hidden;
+  width: 0;
+}
+[type="file"] + label {
+  padding: 1rem 10px;
+  transition: all 0.3s;
+  vertical-align: middle;
+}
+[type="file"] + label:hover {
+  background-color: #81000d;
+}
+
+[type="file"] + label.btn-2 {
+  background-color: #dc0011;
+  border-radius: 5px;
+  overflow: hidden;
+}
+[type="file"] + label.btn-2::before {
+  color: #fff;
+  transition: all 0.3s;
+}
+[type="file"] + label.btn-2:hover {
+  background-color: #81000d;
+}
+[type="file"] + label.btn-2:hover::before {
+  right: 75%;
+}
+
     </style>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link href="/static/css/post.detail.css"  rel="stylesheet"/>
 {% endblock %}
 {% block inicio %}<a class="navbar-brand" href="#" onclick="return reset()">ezPosts</a> {% endblock %}
@@ -97,8 +128,9 @@
                                                      <textarea type="text" class="form-control" id="publicar" placeholder="Escribe aqui el contenido"></textarea>
                                                  </div>
                                                  <div class="p-2">
-                                                     <input type='file' onchange="readURL(this);"/>
-                                                     <img id="blah" src="#" alt="img" style="width: 100%; height: auto; object-fit: contain;"/>
+                                                     <input type='file' id="imagen" onchange="readURL(this);"/>
+                                                     <label for="imagen" class="btn-2">Imagen</label>
+                                                     <img id="blah" src="#" alt=" " style="width: 100%; height: auto; object-fit: contain;"/>
                                                  </div>
                                             </div>
                                         </form>

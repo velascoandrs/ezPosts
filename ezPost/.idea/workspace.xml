@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fe57a33b-f4bd-40b7-909f-50681a8c4001" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/db.sqliteV4" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqliteV4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -84,13 +83,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="88" column="70" selection-start-line="88" selection-start-column="70" selection-end-line="88" selection-end-column="70" />
+            <state relative-caret-position="437">
+              <caret line="62" column="1" lean-forward="true" selection-start-line="62" selection-start-column="1" selection-end-line="62" selection-end-column="1" />
               <folding>
                 <element signature="e#2369#2390#0#HTML" expanded="true" />
-                <element signature="e#2314#2883#0#HTML" />
                 <element signature="e#3052#3073#0#HTML" expanded="true" />
-                <element signature="e#4625#4680#0#HTML" expanded="true" />
+                <element signature="e#5979#6034#0#HTML" expanded="true" />
                 <element signature="e#3178#3210#0#HTML" expanded="true" />
               </folding>
             </state>
@@ -422,12 +420,12 @@
       <workItem from="1553735413169" duration="7170000" />
       <workItem from="1553742816309" duration="516000" />
       <workItem from="1553825067379" duration="5012000" />
-      <workItem from="1553996851414" duration="8862000" />
+      <workItem from="1553996851414" duration="10774000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="289434000" />
+    <option name="totallyTimeSpent" value="291346000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -843,13 +841,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="88" column="70" selection-start-line="88" selection-start-column="70" selection-end-line="88" selection-end-column="70" />
+        <state relative-caret-position="437">
+          <caret line="62" column="1" lean-forward="true" selection-start-line="62" selection-start-column="1" selection-end-line="62" selection-end-column="1" />
           <folding>
             <element signature="e#2369#2390#0#HTML" expanded="true" />
-            <element signature="e#2314#2883#0#HTML" />
             <element signature="e#3052#3073#0#HTML" expanded="true" />
-            <element signature="e#4625#4680#0#HTML" expanded="true" />
+            <element signature="e#5979#6034#0#HTML" expanded="true" />
             <element signature="e#3178#3210#0#HTML" expanded="true" />
           </folding>
         </state>
