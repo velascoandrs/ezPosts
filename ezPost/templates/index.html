@@ -39,30 +39,27 @@
     overflow: hidden;
     width: 0;
 }
+
 [type="file"] + label {
-    transition: all 0.3s;
-    width: 36px;
-    height: 36px;
-}
-
-
-[type="file"] + label.btn-2 {
   overflow: hidden;
+   width: 20%;
+   padding: 5px;
 }
-[type="file"] + label.btn-2::before {
+
+[type="file"] + label:before {
   color: #fff;
   transition: all 0.3s;
 }
-.si-glyph-image{
-    fill: blue;
-}
-.si-glyph-image:hover{
-    fill: #81000d;
+#input-label:hover {
+    background-color: #000000;
+    border-radius: 10px;
+    transition: all 0.5s;
 }
 
 
     </style>
     <link href="/static/css/post.detail.css"  rel="stylesheet"/>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
 {% endblock %}
 {% block inicio %}<a class="navbar-brand" href="#" onclick="return reset()">ezPosts</a> {% endblock %}
  {% block busquedaForm %}
@@ -83,8 +80,8 @@
 				{% endblock %}
     {% block metacontent %}
         <div class="row">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-8">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active text-white bg-dark" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Pocket Post</a>
@@ -126,8 +123,8 @@
                                                  </div>
                                                  <div class="p-2">
                                                      <input type='file' id="imagen" onchange="readURL(this);"/>
-                                                     <label for="imagen" class="btn-2 glyphicon glyphicon-picture">
-                                                         <img class="si-glyph-image" src="/static/glyph/svg/si-glyph-image.svg" />
+                                                     <label for="imagen"  id="input-label" class="far fa-image">
+                                                         Foto
                                                      </label>
                                                      <img id="blah" src="#" alt=" " style="width: 100%; height: auto; object-fit: contain;"/>
                                                  </div>
@@ -146,18 +143,18 @@
                     </div>
 
         </div>
-        <div class="col-sm-2"></div>
+        <div class="col-sm-3"></div>
     </div>
 
 {% block content %}
 
     <div class="row" >
 
-        <div class="col-sm-2"></div>
-        <div class="col-sm-8 animated fadeInLeft" id="contenido">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6 animated fadeInLeft" id="contenido">
 
         </div>
-        <div class="col-sm-2"></div>
+        <div class="col-sm-3"></div>
 
     </div>
 
@@ -184,6 +181,9 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
+
+
     </script>
 
 {% endblock %}
