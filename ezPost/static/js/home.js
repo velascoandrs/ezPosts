@@ -22,7 +22,21 @@
         }
 
     }
+    const promesaReset = ()=>{
+        return new Promise((resolve,reject)=>{
+            cargarPosts(1,true);
+            resolve('Se ha limpiado');
+        })
+    };
 
+    function reset() {
+        promesaReset()
+            .then(
+                ()=>{
+                    pagina=1;
+                }
+            )
+    }
     const promesaLimpiar = ()=>{
         return new Promise((resolve,reject)=>{
             $("#contenido").empty()
@@ -38,8 +52,8 @@
     function cargarPosts(pagina,inicio=false){
         let $contenido = $("#contenido");
         if (inicio){
-            $("#title").empty();
-            $("#title").append('<h2 class="titulo text-white"><strong>Post más recientes</strong></h2>');
+            //$("#title").empty();
+            //$("#title").append('<h2 class="titulo text-white"><strong>Post más recientes</strong></h2>');
             limpiar();
         }else {
             setUrl(pagina);
@@ -73,7 +87,9 @@
             var scroll_position_for_post_load = $(window).height() + $(window).scrollTop()+1;
             if (scroll_position_for_post_load >= $(document).height()){
                 pagina++;
-                cargarPosts(pagina);
+                if(pagina>1){
+                    cargarPosts(pagina);
+                }
             }
         }
     );
@@ -108,8 +124,8 @@
                       valor = document.getElementById('buscar').value;
                       setPagina(1);
                       $("#contenido").empty();
-                      $("#title").empty();
-                      $("#title").append('<h2 class="titulo text-white"><strong>Resultados de la busqueda</strong></h2>');
+                      //$("#title").empty();
+                      //$("#title").append('<h2 class="titulo text-white"><strong>Resultados de la busqueda</strong></h2>');
                       cargarPosts(1)
                 }
             );

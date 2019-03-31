@@ -36,7 +36,7 @@
     </style>
     <link href="/static/css/post.detail.css"  rel="stylesheet"/>
 {% endblock %}
-{% block inicio %}<a class="navbar-brand" href="#" onclick="cargarPosts(1,true)">ezPosts</a> {% endblock %}
+{% block inicio %}<a class="navbar-brand" href="#" onclick="return reset()">ezPosts</a> {% endblock %}
  {% block busquedaForm %}
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" id ="buscar" type="search" placeholder="Busqueda" aria-label="Search">
@@ -44,7 +44,6 @@
        <button class="btn btn-danger my-2 my-sm-0" onclick="return buscarPost()">Buscar Post</button>
 
   {% endblock %}
-{% block titulo %}Posts más recientes{% endblock %}
 
             {% block lateral %}
 				<div class="animated fadeInLeft">
@@ -54,11 +53,33 @@
   					<a href="#contact">Contact</a>
 				</div>
 				{% endblock %}
+    {% block metacontent %}
+        <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <form>
+                <div class="form-group border bg-dark d-flex flex-row" style="padding: 20px">
+                    <div class="p-2">
+                        <img src="http://{{ request.get_host }}/media/{{ user.perfil.foto_perfil }}" class="rounded-circle" alt="Cinque Terre" height="32" width="32" />
+                    </div>
+                    <div class="p-2 flex-fill">
+                        <input type="text" class="form-control" id="publicar" placeholder="¿Quieres publicar?">
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+
 {% block content %}
+
     <div class="row" >
 
         <div class="col-sm-2"></div>
-        <div class="col-sm-8 animated fadeInLeft" id="contenido"></div>
+        <div class="col-sm-8 animated fadeInLeft" id="contenido">
+
+        </div>
         <div class="col-sm-2"></div>
 
     </div>
@@ -66,6 +87,7 @@
     {% block acerca %}{% endblock %}
 
 {% endblock %}
+    {% endblock %}
 
 {% block bot %}{% endblock %}
 
