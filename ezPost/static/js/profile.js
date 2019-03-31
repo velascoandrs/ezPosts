@@ -75,23 +75,27 @@ class ApiLoader{
 
 
     function PostRender(post){
-	    let html =`<div class="blog-card">
+	    let html =`<div  class="bg-dark" style="border-radius: 5px">
+                    <div class="blog-card">
                     <div class="description">
-                        <h1>${post.titulo}</h1>
-                        <p><strong>Categoría: </strong>${post.afinidad}</p>
-                        <p><strong>Visualizaciones: </strong>${post.visualizaciones}</p>
-                            <p class="read-more">
-                                <a href="/post/ver/${post.pk}">Leer mas..</a>
-                             </p>
+                        <h1 class="titulo">${post.titulo}</h1>
+                        <div class="d-flex bd-highlight mb-3">
+                                <div class="mr-auto p-2">
+                                    <p><strong>Categoría: </strong>${post.afinidad}</p>
+                                    <p><strong>Visualizaciones: </strong>${post.visualizaciones}</p>
+                                </div>
+                                <div class="p-2 ">
+                                     <a href="/post/ver/${post.pk}"><button class="btn btn-dark">Leer mas..</button></a>
+                                </div>
+                        </div>
+                        
                     </div>
                         <div class="meta">
                          <div class="photo" style="background-image: url(${post.portada})">
                           </div>
-                           <ul class="details">
-                             <li >${post.fecha_creacion}</li>
-                            </ul>
                          </div>
                     
+                    </div>  
                     </div>`;
     return html
 }

@@ -13,18 +13,19 @@
     }
     </style>
     <script>hljs.initHighlightingOnLoad();</script>
+
     <div class="row">
         <div class="col-md-2">
 
         </div>
         <div class="col-md-8">
 
-    <h2 class="titulo">{% block titulo %}{{ post.titulo }}{% endblock %}</h2>
+    <h2 class="titulo text-white">{% block titulo %}{{ post.titulo }}{% endblock %}</h2>
      <link href="/static/css/post.detail.css"  rel="stylesheet"/>
         <div class="col-md-12 border marco" id="contenido">
-            {% if user.is_authenticated and post.autor.id == user.id %}
-                <h6>Creado: {{ post.fecha_creacion }}</h6>
-                <a href="{% url 'posts:editar_post' post.id  %}"><button class="btn btn-dark">Actualizar</button></a>
+            {% if user.is_authenticated and post.publicacion.autor.id == user.id %}
+                <h6>Creado: {{ post.publicacion.fecha_creacion }}</h6>
+                <a href="{% url 'posts:editar_post' post.pk  %}"><button class="btn btn-dark">Actualizar</button></a>
                 <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">Eliminar</button>
                  <!-- Modal -->
                     <div class="modal fade" id="myModal" role="dialog">
@@ -41,7 +42,7 @@
                                         <img style="width: 100%; height: auto; object-fit: contain;" src="http://127.0.0.1:8000/media/{{ post.portada }}">
                                     </div>
                                 <div class="modal-footer" style="background-color: black;">
-                                    <a href="{% url 'posts:eliminar_post' post.id  %}">
+                                    <a href="{% url 'posts:eliminar_post' post.pk  %}">
                                         <button type="button" class="btn btn-danger">Eliminar</button>
                                     </a>
                                     <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
@@ -51,8 +52,8 @@
                         </div>
                     </div>
             {% else %}
-            <h6> {{ post.autor.username }}</h6>
-            <h6>Creado: {{ post.fecha_creacion }}</h6>
+            <h6> {{ post.publicacion.autor.username }}</h6>
+            <h6>Creado: {{ post.publicacion.fecha_creacion }}</h6>
                         {% if not existe_denuncia %}
                         {% if user.is_authenticated %}
                         <div class="dropdown" id="contenedor">
@@ -76,11 +77,11 @@
         </div>
         <div class="col-md-2">
                     <div class="card stuck" style="background-color: black">
-                        <img class="card-img-top" src="http://{{ request.get_host }}/media/{{ post.autor.perfil.foto_perfil }}" alt="Foto de perfil">
+                        <img class="card-img-top" src="http://{{ request.get_host }}/media/{{ post.publicacion.autor.perfil.foto_perfil }}" alt="Foto de perfil">
                         <div class="card-body">
-                            <h5 class="card-title text-white titulo">{{ post.autor.username }}</h5>
-                            <p class="card-text text-white">Publicaciones: {{ post.autor.post_set.count }}</p>
-                            <a href="/usuario/perfil/{{ post.autor.id }}" class="btn btn-light btn-block">Ver perfil</a>
+                            <h5 class="card-title text-white titulo">{{ post.publicacion.autor.username }}</h5>
+                            <p class="card-text text-white">Publicaciones: {{ post.publicacion.autor.publicacion_set.count }}</p>
+                            <a href="/usuario/perfil/{{ post.publicacion.autor.id }}" class="btn btn-light btn-block">Ver perfil</a>
                         </div>
                     </div>
                 </div>
@@ -99,7 +100,7 @@
         let $bloque_padre = $("#tipo_denuncias");
         let $contenedor = $("#contenedor");
         let u_id = {% if user.id  %}{{ user.id }}{% else %}''{% endif %}
-        const id_post = {{ post.id }}
+        const id_publicacion = {{ post.publicacion.id }}
 
          console.log("id_usuario", u_id);
 
@@ -123,13 +124,12 @@
                     html.click(
                         ()=>{
                             const id_tipo =html.val();
-                            const url = `/post/denuncia/${id_post}/${id_tipo}/`;
+                            const url = `/post/denuncia/${id_publicacion}/${id_tipo}/`;
                             $.get(
                                 url,
                                 (data)=>{
                                     console.log(data);
-                                    if(data == 'Ok'){
-                                        console.log('esta qui')
+                                    if(data.respuesta === 'OK'){
                                         $contenedor.empty();
                                         $contenedor.append('<h6 style="color: darkred;"><strong>Has denunciado este post</strong></h6>')
                                     }else {
@@ -152,8 +152,8 @@
 
 {% block titulo_acerca %}Acerca del autor:{% endblock %}
  {% block contenidoAutor %}
-        <img src="http://{{ request.get_host }}/media/{{ post.autor.perfil.foto_perfil }}"
+        <img src="http://{{ request.get_host }}/media/{{ post.publicacionautor.perfil.foto_perfil }}"
              class="rounded-circle" alt="Cinque Terre" height="128" width="128"/>
-        <a href=""><h4>{{ post.autor.username }}</h4></a>
-        <a><h4>Posts publicados:{{ post.autor.post_set.count }}</h4></a>
+        <a href=""><h4>{{ post.publicacion.autor.username }}</h4></a>
+        <a><h4>Posts publicados:{{ post.publicacion.autor.publicacion_set.count }}</h4></a>
  {% endblock %}

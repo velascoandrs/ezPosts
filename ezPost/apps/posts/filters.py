@@ -1,4 +1,4 @@
-from django_filters.rest_framework import FilterSet, NumberFilter, CharFilter,AllValuesFilter
+from django_filters.rest_framework import FilterSet, NumberFilter, CharFilter
 
 from apps.posts.models import Post
 

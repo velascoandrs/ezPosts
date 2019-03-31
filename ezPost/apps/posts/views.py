@@ -1,19 +1,13 @@
-import django_filters
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated, AllowAny
-
-from apps.posts.filters import PostFilter
 from apps.posts.forms import *
 from apps.posts.helpers import handle_uploaded_file
 from apps.posts.models import *
 from apps.usuarios.models import Afinidad
 from django.views.generic import DetailView
-from apps.posts.serializers import PostDetalleSerializado, TipoDenunciaSerializado, AvisoSerializado
-from django.db.models import Q
+
 
 def index_post(request):
     return HttpResponse("Index de los posts")
@@ -21,13 +15,13 @@ def index_post(request):
 
 # Mostrar el contenido de un post v2
 def mostrar_post(request, post_id):
-    post = Post.objects.get(id=post_id)
+    post = Post.objects.get(pk=post_id)
     existe_denuncia = False
     if request.user.is_authenticated:
-        if post.denuncias.filter(usuario_denunciante=request.user.id):
+        if post.publicacion.denuncias.filter(usuario_denunciante=request.user.id):
             existe_denuncia = True
-        if post.autor.pk != request.user.id:
-            Visualizacion.objects.create(post=post)
+        if post.publicacion.autor.pk != request.user.id:
+            Visualizacion.objects.create(post_visualizado=post)
     return render(request, 'post/post_info.html', {'post': post, 'existe_denuncia': existe_denuncia})
 
 
@@ -42,41 +36,9 @@ class PostView(DetailView):
         self.object = self.get_object()
         # Solo cuenta visitas de usuarios registrados y que no sea el mismo autor
         if request.user.is_authenticated and self.object.autor.pk != request.user.id:
-            Visualizacion.objects.create(post=self.object)
+            Visualizacion.objects.create(post_visualizado=self.object)
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
-
-# API de POSTS v2, solamente muestra los detalles del POST no el contenido
-class PostDetalleListApiv2(generics.ListAPIView):
-    serializer_class = PostDetalleSerializado
-    permission_classes = (AllowAny,)
-    paginate_by = 10
-    queryset = Post.objects.all().order_by('-pk')
-    filter_class = PostFilter
-
-
-# API de POSTS, solamente muestra los detalles del POST no el contenido
-class PostDetalleListApi(generics.ListAPIView):
-    serializer_class = PostDetalleSerializado
-    permission_classes = (AllowAny,)
-    paginate_by = 10
-
-    def get_queryset(self):
-        queryset = Post.objects.all().order_by('-pk')
-        titulo = self.request.query_params.get('titulo', None)
-        autor_id = self.request.query_params.get('autor_id', None)
-
-        # Si el usuario esta logeado filtrar los posts por las afinidades del usuario y los post creados por el mismo
-        if self.request.user.is_authenticated and autor_id is None and titulo is None:
-            usuario = User.objects.get(id=self.request.user.id)
-            queryset = Post.objects\
-                .filter(Q(afinidad__in=usuario.perfil.afinidades.all()) | Q(autor=usuario)).order_by('-pk')
-
-        if titulo is not None:
-            queryset = queryset.filter(titulo__contains=titulo)
-        if autor_id is not None:
-            queryset = queryset.filter(autor__id=autor_id)
-        return queryset
 
 
 # Vista que permitira la creacion del post
@@ -89,12 +51,18 @@ def crear_post(request):
         contenido = request.POST.get('contenido', '')
         afinidad_pk = request.POST.get('afinidad', '')
         afinidad = Afinidad.objects.get(pk=afinidad_pk)
-        post = Post.objects.create(
+        tipo_publicacion = TipoPublicacion.objects.get(id=1)
+        post_publicacion = Publicacion.objects.create(
             autor=request.user,
+            tipo_publicacion=tipo_publicacion,
+        )
+        post_publicacion.save()
+        post = Post.objects.create(
             titulo=titulo,
             portada=portada,
             afinidad=afinidad,
-            contenido=contenido
+            contenido=contenido,
+            publicacion=post_publicacion
         )
         post.save()
         return redirect('usuarios:ver_perfil', request.user.id)
@@ -107,9 +75,9 @@ def crear_post(request):
 @login_required(login_url='/')
 def editar_post(request, post_id):
     #  Encontrar el post
-    post = get_object_or_404(Post, id=post_id)
+    post = get_object_or_404(Post, pk=post_id)
     # Validar que el usuario es propietario del post
-    if post.autor.id != request.user.id:
+    if post.publicacion.autor.id != request.user.id:
         # Si no es propietario sera sera redireccionado al inicio
         return redirect('/')
     # Crear un formulario y llenarno con la instancia del post encontrado
@@ -128,52 +96,32 @@ def editar_post(request, post_id):
 @login_required(login_url='/')
 def eliminar_post(request, post_id):
     #  Encontrar el post
-    post = get_object_or_404(Post, id=post_id)
-    if post.autor.id != request.user.id:
+    post = get_object_or_404(Post, pk=post_id)
+    if post.publicacion.autor.id != request.user.id:
         return redirect('/')
     # Eliminar el post
     post.delete()
     return redirect('usuarios:ver_perfil', request.user.id)
 
 
-#  https://docs.djangoproject.com/es/2.1/topics/http/file-uploads/
-
-
-# Obtener los tipos de denuncia
-class TipoDenunciaListApi(generics.ListAPIView):
-    serializer_class = TipoDenunciaSerializado
-    queryset = TipoDenuncia.objects.all()
-
-
 # Vista encargada de registrar denuncias referentes a un post
-def registrar_denuncia(request, id_post, id_tipo_denuncia):
+@login_required(login_url="/")
+def registrar_denuncia(request, id_publicacion, id_tipo_denuncia):
     # Se crea la denuncia respectiva
     denuncia = Denuncia.objects.create(
         tipo_decuncia_id=id_tipo_denuncia,
         usuario_denunciante_id=request.user.id
     )
     # Se encuentra el post que se denuncia
-    post = Post.objects.get(pk=id_post)
+    publicacion = Publicacion.objects.get(pk=id_publicacion)
     tipo_denuncia = TipoDenuncia.objects.get(pk=id_tipo_denuncia)
     # Se crea el aviso para notificar al autor del post
     Aviso.objects.create(
         contenido=f"Tu publicacion ha sido denunciada por: {tipo_denuncia.nombre_tipo_denuncia}",
-        post=post
+        publicacion=publicacion
     )
-    post.denuncias.add(denuncia)
-    return HttpResponse("Ok")
-
-
-# API DE AVISOS
-class AvisoAPI(generics.ListAPIView):
-    permission_classes = (IsAuthenticated,)
-    serializer_class = AvisoSerializado
-    paginate_by = 3
-
-    def get_queryset(self):
-        queryset = Aviso.objects \
-            .filter(post__autor__id=self.request.user.id).order_by('-pk')
-        return queryset
+    publicacion.denuncias.add(denuncia)
+    return JsonResponse({'respuesta': 'OK'})
 
 
 #  Cambiar avisos por revisado
@@ -182,7 +130,7 @@ class AvisoAPI(generics.ListAPIView):
 def marcar_avisos_revisados(request):
     if request.method == 'POST':
         Aviso.objects \
-            .filter(post__autor__id=request.user.id) \
+            .filter(publicacion__autor__id=request.user.id) \
             .filter(esta_revisado=False) \
             .update(esta_revisado=True)
-        return HttpResponse("OK")
+        return JsonResponse({'mensaje': 'OK'})

@@ -17,7 +17,7 @@
                      <h2 class="titulo">{% block titulo %}{{ usuario.username}}{% endblock %}</h2>
                     <div class="row fondo">
                         <div class="col-md-4">
-                                {% if usuario.perfil.foto_perfil  %}
+                                {% if usuario.perfil.foto_perfil != 'ninguna'  %}
                                     <a href="" data-toggle="modal" data-target="#myModal">
                                     <img  alt="foto-perfil" class="img-thumbnail" style='height: auto; width: 100%; object-fit: contain' src="http://{{ request.get_host }}/media/{{ usuario.perfil.foto_perfil }}"/></a>
                                 {% else %}
