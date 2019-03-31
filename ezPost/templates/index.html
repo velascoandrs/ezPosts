@@ -33,38 +33,35 @@
     transform: rotate(1800deg);
   }
 }
-    [type="file"] {
-  height: 0;
-  overflow: hidden;
-  width: 0;
+
+[type="file"] {
+    height: 0;
+    overflow: hidden;
+    width: 0;
 }
 [type="file"] + label {
-  padding: 1rem 10px;
-  transition: all 0.3s;
-  vertical-align: middle;
-}
-[type="file"] + label:hover {
-  background-color: #81000d;
+    transition: all 0.3s;
+    width: 36px;
+    height: 36px;
 }
 
+
 [type="file"] + label.btn-2 {
-  background-color: #dc0011;
-  border-radius: 5px;
   overflow: hidden;
 }
 [type="file"] + label.btn-2::before {
   color: #fff;
   transition: all 0.3s;
 }
-[type="file"] + label.btn-2:hover {
-  background-color: #81000d;
+.si-glyph-image{
+    fill: blue;
 }
-[type="file"] + label.btn-2:hover::before {
-  right: 75%;
+.si-glyph-image:hover{
+    fill: #81000d;
 }
 
+
     </style>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link href="/static/css/post.detail.css"  rel="stylesheet"/>
 {% endblock %}
 {% block inicio %}<a class="navbar-brand" href="#" onclick="return reset()">ezPosts</a> {% endblock %}
@@ -129,7 +126,9 @@
                                                  </div>
                                                  <div class="p-2">
                                                      <input type='file' id="imagen" onchange="readURL(this);"/>
-                                                     <label for="imagen" class="btn-2">Imagen</label>
+                                                     <label for="imagen" class="btn-2 glyphicon glyphicon-picture">
+                                                         <img class="si-glyph-image" src="/static/glyph/svg/si-glyph-image.svg" />
+                                                     </label>
                                                      <img id="blah" src="#" alt=" " style="width: 100%; height: auto; object-fit: contain;"/>
                                                  </div>
                                             </div>
